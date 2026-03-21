@@ -1,62 +1,226 @@
-# Projeto PWA — Roteiro Prático de Anatomia
-
-Abaixo estão os arquivos completos do app em PWA, com os termos exatamente como você enviou, sem renomear nem acrescentar nomes anatômicos.
-
----
-
-## 1) `index.html`
-
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0f172a" />
   <title>Roteiro Prático de Anatomia</title>
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#121a30;
+      --card2:#1a2440;
+      --text:#eef4ff;
+      --muted:#a9b7d0;
+      --line:#2c3a61;
+      --accent:#66b3ff;
+      --accent2:#8b7bff;
+      --ok:#2dd4bf;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,#09101d,#10172a);
+      color:var(--text);
+    }
+
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:20px;
+    }
+
+    .top{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+
+    h1{margin:0 0 6px 0;font-size:2rem}
+    .sub{margin:0;color:var(--muted)}
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    button,label.btn-upload{
+      border:none;
+      border-radius:12px;
+      padding:12px 16px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .btn-note{background:#22304f;color:#fff;border:1px solid #3c5488}
+    .btn-pdf{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+    .btn-add{background:#18334a;color:#fff;border:1px solid #27577d}
+    .btn-reset{background:#2a2233;color:#fff;border:1px solid #57406c}
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      margin-bottom:16px;
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+
+    .term-box{
+      background:var(--card2);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+      margin-top:10px;
+    }
+
+    h2,h3{margin-top:0}
+
+    textarea{
+      width:100%;
+      min-height:110px;
+      margin-top:10px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#0c1428;
+      color:var(--text);
+      padding:12px;
+      resize:vertical;
+    }
+
+    .field-label{
+      display:block;
+      margin-top:14px;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    .note-wrapper[hidden]{display:none}
+
+    .upload-row{margin-top:12px}
+    .btn-upload{
+      display:inline-block;
+      background:#16384a;
+      border:1px solid #2b6d8f;
+      color:#fff;
+    }
+    .btn-upload input{display:none}
+
+    .gallery{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      gap:12px;
+      margin-top:12px;
+    }
+
+    .thumb{
+      position:relative;
+      border-radius:14px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:#0c1428;
+    }
+
+    .thumb img{
+      width:100%;
+      height:170px;
+      object-fit:cover;
+      display:block;
+    }
+
+    .thumb button{
+      position:absolute;
+      right:8px;
+      top:8px;
+      width:30px;
+      height:30px;
+      border-radius:999px;
+      background:rgba(0,0,0,.75);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.15);
+      padding:0;
+    }
+
+    .table-wrap{overflow:auto;margin-top:12px}
+    table{
+      width:100%;
+      min-width:700px;
+      border-collapse:collapse;
+    }
+    th,td{
+      border:1px solid var(--line);
+      padding:10px;
+      text-align:left;
+      vertical-align:top;
+    }
+    th{background:#172443}
+    td[contenteditable="true"]{background:#0c1428}
+
+    .row-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+
+    .tree-list{
+      list-style:none;
+      margin:0;
+      padding-left:18px;
+      border-left:1px dashed #3a4d80;
+    }
+    .tree-item{margin:8px 0}
+    .tree-label{
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      background:#18284a;
+      border:1px solid #304d8d;
+    }
+
+    .ok{
+      color:var(--ok);
+      font-weight:700;
+      margin-top:8px;
+      display:none;
+    }
+
+    @media print{
+      body{background:#fff;color:#000}
+      .actions,.upload-row,.thumb button,.btn-add,.btn-reset,.ok{display:none !important}
+      .card,.term-box{background:#fff;color:#000;border:1px solid #bbb;box-shadow:none}
+      textarea{background:#fff;color:#000;border:1px solid #bbb}
+      .tree-label{background:#f5f5f5;color:#000;border:1px solid #bbb}
+      th,td{border:1px solid #bbb;color:#000}
+      th{background:#eee}
+    }
+  </style>
 </head>
 <body>
-  <header class="topbar">
-    <div>
-      <p class="eyebrow">PWA educacional</p>
-      <h1>Roteiro Prático de Anatomia</h1>
-      <p class="subtitle">Com imagens, anotações, tabela editável, modo offline e exportação em PDF.</p>
-    </div>
-    <div class="top-actions">
-      <button id="installBtn" class="btn secondary hidden">Instalar app</button>
-      <button id="noteBtn" class="btn ghost">Tomar nota</button>
-      <button id="pdfBtn" class="btn primary">Salvar em PDF</button>
-    </div>
-  </header>
-
-  <main class="container">
-    <section class="hero card">
+  <div class="wrap">
+    <div class="top">
       <div>
-        <h2>Roteiro prático</h2>
-        <p>Este aplicativo mantém os termos anatômicos exatamente como foram fornecidos. Você pode inserir imagens em cada bloco, fazer anotações e usar offline.</p>
+        <h1>Roteiro Prático de Anatomia</h1>
+        <p class="sub">Versão estável para testar primeiro no PC.</p>
       </div>
-      <div class="hero-grid">
-        <div class="mini-pill">PWA</div>
-        <div class="mini-pill">Offline</div>
-        <div class="mini-pill">Imagens</div>
-        <div class="mini-pill">PDF</div>
+      <div class="actions">
+        <button id="noteBtn" class="btn-note">Tomar nota</button>
+        <button id="pdfBtn" class="btn-pdf">Salvar em PDF</button>
       </div>
-    </section>
+    </div>
 
     <section class="card">
       <h2>1.</h2>
       <div class="term-box">
-        <p><strong>Defina esqueleto axial e esqueleto apendicular.</strong></p>
+        <strong>Defina esqueleto axial e esqueleto apendicular.</strong>
       </div>
       <div class="note-wrapper">
         <label class="field-label">Resposta / anotações</label>
-        <textarea class="note" data-note-id="sec-1" placeholder="Digite aqui..."></textarea>
+        <textarea data-note-id="sec-1" placeholder="Digite aqui..."></textarea>
       </div>
       <div class="upload-row">
-        <label class="upload-btn">
-          <input type="file" accept="image/*" multiple data-image-id="sec-1" />
+        <label class="btn-upload">
+          <input type="file" accept="image/*" multiple data-image-id="sec-1">
           Inserir imagens
         </label>
       </div>
@@ -66,7 +230,7 @@ Abaixo estão os arquivos completos do app em PWA, com os termos exatamente como
     <section class="card">
       <h2>2.</h2>
       <div class="term-box">
-        <p><strong>Faça uma tabela (conforme modelo abaixo) com os nomes de todos os ossos do CH, classificando-os como esqueleto axial ou apendicular, e quanto à forma do osso.</strong></p>
+        <strong>Faça uma tabela (conforme modelo abaixo) com os nomes de todos os ossos do CH, classificando-os como esqueleto axial ou apendicular, e quanto à forma do osso.</strong>
       </div>
 
       <div class="table-wrap">
@@ -83,19 +247,70 @@ Abaixo estão os arquivos completos do app em PWA, com os termos exatamente como
       </div>
 
       <div class="row-actions">
-        <button class="btn secondary" id="addRowBtn">Adicionar linha</button>
-        <button class="btn ghost" id="resetRowsBtn">Restaurar linhas vazias</button>
+        <button id="addRowBtn" class="btn-add">Adicionar linha</button>
+        <button id="resetRowsBtn" class="btn-reset">Restaurar linhas</button>
       </div>
 
       <div class="note-wrapper">
-        <div class="note-wrapper">
-        <div class="note-wrapper">
         <label class="field-label">Anotações</label>
-        <textarea class="note" data-note-id="sec-4" placeholder="Digite aqui..."></textarea>
+        <textarea data-note-id="sec-2" placeholder="Digite aqui..."></textarea>
       </div>
       <div class="upload-row">
-        <label class="upload-btn">
-          <input type="file" accept="image/*" multiple data-image-id="sec-4" />
+        <label class="btn-upload">
+          <input type="file" accept="image/*" multiple data-image-id="sec-2">
+          Inserir imagens
+        </label>
+      </div>
+      <div class="gallery" id="gallery-sec-2"></div>
+    </section>
+
+    <section class="card">
+      <h2>3.</h2>
+      <div class="term-box">
+        <strong>Observe a arquitetura óssea dos ossos longos e identifique:</strong>
+        <ul>
+          <li>Diáfise</li>
+          <li>Epífise proximal</li>
+          <li>Epífise distal</li>
+          <li>Metáfise</li>
+          <li>Cartilagem epifisial</li>
+          <li>Lâmina epifisial</li>
+          <li>Linha epifisial</li>
+          <li>Substância óssea compacta</li>
+          <li>Substância óssea esponjosa</li>
+          <li>Cavidade medular</li>
+        </ul>
+      </div>
+      <div class="note-wrapper">
+        <label class="field-label">Anotações</label>
+        <textarea data-note-id="sec-3" placeholder="Digite aqui..."></textarea>
+      </div>
+      <div class="upload-row">
+        <label class="btn-upload">
+          <input type="file" accept="image/*" multiple data-image-id="sec-3">
+          Inserir imagens
+        </label>
+      </div>
+      <div class="gallery" id="gallery-sec-3"></div>
+    </section>
+
+    <section class="card">
+      <h2>4.</h2>
+      <div class="term-box">
+        <strong>Observe a arquitetura óssea dos ossos planos do crânio e identifique:</strong>
+        <ul>
+          <li>Díploe</li>
+          <li>Lâmina externa da calvária</li>
+          <li>Lâmina interna da calvária</li>
+        </ul>
+      </div>
+      <div class="note-wrapper">
+        <label class="field-label">Anotações</label>
+        <textarea data-note-id="sec-4" placeholder="Digite aqui..."></textarea>
+      </div>
+      <div class="upload-row">
+        <label class="btn-upload">
+          <input type="file" accept="image/*" multiple data-image-id="sec-4">
           Inserir imagens
         </label>
       </div>
@@ -104,992 +319,362 @@ Abaixo estão os arquivos completos do app em PWA, com os termos exatamente como
 
     <section class="card">
       <h2>ESQUELETO AXIAL</h2>
+      <h3>CRÂNIO</h3>
       <div id="roteiro-root"></div>
       <div class="note-wrapper">
         <label class="field-label">Anotações gerais</label>
-        <textarea class="note" data-note-id="sec-geral" placeholder="Digite aqui..."></textarea>
+        <textarea data-note-id="sec-geral" placeholder="Digite aqui..."></textarea>
       </div>
       <div class="upload-row">
-        <label class="upload-btn">
-          <input type="file" accept="image/*" multiple data-image-id="sec-geral" />
+        <label class="btn-upload">
+          <input type="file" accept="image/*" multiple data-image-id="sec-geral">
           Inserir imagens
         </label>
       </div>
       <div class="gallery" id="gallery-sec-geral"></div>
+      <div class="ok" id="saveMsg">Anotações salvas no navegador.</div>
     </section>
-  </main>
+  </div>
 
-  <script src="data.js"></script>
-  <script src="app.js"></script>
-</body>
-</html>
-```
+  <script>
+    const roteiroData = [
+      {
+        nome: "1. Frontal",
+        itens: [
+          "a. Escama frontal",
+          "b. Túber frontal",
+          "c. Arco superciliar",
+          "d. Glabela",
+          "e. Margem supra-orbital",
+          "f. Incisura supra-orbital (forame supra-orbital)",
+          "g. Parte orbital",
+          "h. Parte nasal",
+          "i. Sutura frontal – Sutura metópica",
+          "j. Seio frontal"
+        ]
+      },
+      {
+        nome: "2. Occipital",
+        itens: [
+          "a. Protuberância occipital externa",
+          "b. Crista occipital externa",
+          "c. Linha nucal superior",
+          "d. Linha nucal inferior",
+          "e. Protuberância occipital interna",
+          "f. Crista occipital interna",
+          "g. Sulco do seio transverso",
+          "h. Sulco do seio sagital superior",
+          "i. Sulco do seio sigmoide",
+          "j. Sulco do seio petroso inferior",
+          "k. Côndilo occipital",
+          "l. Canal do nervo hipoglosso",
+          "m. Canal condilar",
+          "n. Forame magno",
+          "o. Forame jugular",
+          "p. Parte basilar",
+          "q. Clivo",
+          "r. Fossa cerebelar",
+          "s. Fossa cerebral"
+        ]
+      },
+      {
+        nome: "3. Etmoide",
+        itens: [
+          "a. Lâmina perpendicular",
+          "b. Lâmina cribriforme",
+          "c. Lâmina orbital",
+          "d. Crista etmoidal",
+          "e. Concha nasal superior",
+          "f. Concha nasal média",
+          "g. Seio etmoidal",
+          "h. Células etmoidais anteriores, médias e posteriores"
+        ]
+      },
+      {
+        nome: "4. Mandíbula",
+        itens: [
+          "a. Corpo da mandíbula",
+          "b. Ramo da mandíbula",
+          "c. Ângulo da mandíbula",
+          "d. Tuberosidade massetérica",
+          "e. Tuberosidade pterigoidea",
+          "f. Base da mandíbula",
+          "g. Sínfise da mandíbula",
+          "h. Protuberância mentual",
+          "i. Tubérculo mentual",
+          "j. Forame mentual",
+          "k. Parte alveolar",
+          "l. Alvéolos dentais",
+          "m. Septos interalveolares",
+          "n. Septos interradiculares",
+          "o. Trígono retromolar",
+          "p. Linha oblíqua",
+          "q. Processo condilar",
+          "i. Cabeça da mandíbula",
+          "ii. Colo da mandíbula",
+          "iii. Fóvea pterigoidea",
+          "r. Processo coronoide",
+          "i. Crista temporal",
+          "s. Incisura da mandíbula",
+          "t. Forame da mandíbula",
+          "u. Canal da mandíbula",
+          "v. Língula da mandíbula",
+          "w. Fóvea submentual",
+          "x. Espinha geniana",
+          "y. Fossa digástrica",
+          "z. Fóvea submandibular",
+          "aa. Linha milo-hioidea",
+          "bb. Toro mandibular"
+        ]
+      },
+      {
+        nome: "5. Parietal",
+        itens: [
+          "a. Face interna",
+          "i. Sulco do seio sagital superior",
+          "b. Face externa",
+          "i. Linha temporal superior",
+          "ii. Linha temporal inferior",
+          "iii. Túber parietal (eminência parietal)",
+          "iv. Vértice",
+          "c. Margem frontal",
+          "d. Margem escamosa",
+          "e. Margem occipital",
+          "f. Margem sagital",
+          "g. Forame parietal"
+        ]
+      },
+      {
+        nome: "6. Temporal",
+        itens: [
+          "a. Parte escamosa",
+          "b. Parte timpânica",
+          "c. Parte petrosa",
+          "d. Processo mastoide",
+          "e. Incisura mastoidea",
+          "f. Sulco da artéria occipital",
+          "g. Poro/meato acústico externo",
+          "h. Poro/meato acústico interno",
+          "i. Processo estiloide",
+          "j. Forame estilomastoideo",
+          "k. Canal carótico",
+          "l. Forame lacerado (artefato de crânio seco; in vivo é fechado por uma cartilagem atravessada por pequenas veias e ramos da artéria meníngea)",
+          "m. Fossa mandibular",
+          "n. Tubérculo articular",
+          "o. Arco zigomático",
+          "p. Fossa temporal",
+          "q. Fossa infratemporal",
+          "r. Sulco do seio sigmoide"
+        ]
+      },
+      {
+        nome: "7. Esfenoide",
+        itens: [
+          "a. Corpo",
+          "b. Asa menor",
+          "c. Asa maior",
+          "d. Sela turca",
+          "e. Tubérculo da sela",
+          "f. Fossa hipofisial",
+          "g. Processo clinóide anterior",
+          "h. Processo clinóide posterior",
+          "i. Canal óptico",
+          "j. Fissura orbital superior",
+          "k. Fissura orbital inferior",
+          "l. Forame redondo",
+          "m. Forame oval",
+          "n. Forame espinhoso",
+          "o. Processo pterigoide",
+          "p. Lâmina lateral do processo pterigoide",
+          "q. Lâmina medial do processo pterigoide",
+          "r. Fossa pterigoidea",
+          "s. Hâmulo pterigoideo",
+          "t. Crista infratemporal",
+          "u. Fossa pterigopalatina",
+          "v. Seio esfenoidal",
+          "w. Cóanos"
+        ]
+      },
+      { nome: "8. Vômer", itens: ["a. Crista coanal do vômer"] },
+      { nome: "9. Palatino", itens: ["a. Lâmina perpendicular","b. Lâmina horizontal","c. Forame palatino maior","d. Forames palatinos menores","e. Espinha nasal posterior","f. Processo orbital"] },
+      { nome: "10. Maxila", itens: ["a. Corpo da maxila","b. Seio maxilar","c. Face orbital","i. Sulco infra-orbital","ii. Canal infra-orbital","d. Margem infra-orbital","e. Forame infra-orbital","f. Fossa canina","g. Espinha nasal anterior","h. Túber da maxila","i. Processo frontal","j. Processo zigomático","k. Processo alveolar","i. Alvéolos dentais","ii. Septo interalveolar","iii. Septo interadicular","iv. Forame incisivo","l. Processo palatino","i. Toro palatino","m. Abertura piriforme"] },
+      { nome: "11. Nasal", itens: [] },
+      { nome: "12. Lacrimal", itens: ["a. Sulco lacrimal"] },
+      { nome: "13. Concha nasal inferior", itens: [] },
+      { nome: "14. Zigomático", itens: ["a. Processo frontal","b. Processo temporal","c. Forame zigomaticofrontal"] },
+      { nome: "15. Fontículo anterior", itens: [] },
+      { nome: "16. Fontículo posterior", itens: [] },
+      { nome: "17. Fontículo ântero-lateral", itens: [] },
+      { nome: "18. Fontículo póstero-lateral", itens: [] },
+      { nome: "19. Sutura sagital", itens: [] },
+      { nome: "20. Sutura coronal", itens: [] },
+      { nome: "21. Sutura lambdoidea", itens: [] },
+      { nome: "22. Sutura occipitomastóidea", itens: [] },
+      { nome: "23. Sutura parietomastóidea", itens: [] },
+      { nome: "24. Sutura escamosa", itens: [] },
+      { nome: "25. Sutura esfenoparietal", itens: [] },
+      { nome: "26. Fissura petrotimpânica", itens: [] },
+      { nome: "27. Sutura frontonasal", itens: [] },
+      { nome: "28. Sutura internasal", itens: [] },
+      { nome: "29. Sutura nasomaxilar", itens: [] },
+      { nome: "30. Sutura intermaxilar", itens: [] },
+      { nome: "31. Sutura zigomaticamaxilar", itens: [] },
+      { nome: "32. Sutura palatina mediana", itens: [] },
+      { nome: "33. Sutura palatina transversa", itens: [] },
+      { nome: "34. Ossos suturais", itens: [] },
+      { nome: "35. Calvária", itens: ["a. Sulcos arteriovenosos","b. Impressões dos giros","c. Fovéolas granulares"] },
+      { nome: "36. Base externa do crânio", itens: [] },
+      { nome: "37. Base interna do crânio", itens: ["a. Fossa anterior do crânio","b. Fossa média do crânio","c. Fossa posterior do crânio","d. Fossa cerebelar"] },
+      { nome: "38. Ossículos da audição", itens: ["a. Martelo","b. Bigorna","c. Estribo"] }
+    ];
 
----
+    const tableBody = document.getElementById('ossosTable');
+    const noteBtn = document.getElementById('noteBtn');
+    const pdfBtn = document.getElementById('pdfBtn');
+    const addRowBtn = document.getElementById('addRowBtn');
+    const resetRowsBtn = document.getElementById('resetRowsBtn');
+    const saveMsg = document.getElementById('saveMsg');
 
-## 2) `style.css`
+    const images = JSON.parse(localStorage.getItem('roteiro-images') || '{}');
 
-```css
-:root {
-  --bg: #08111f;
-  --bg-soft: #0f172a;
-  --card: rgba(15, 23, 42, 0.88);
-  --card-border: rgba(148, 163, 184, 0.18);
-  --text: #e5eefc;
-  --muted: #a9b8d0;
-  --accent: #60a5fa;
-  --accent-2: #22d3ee;
-  --accent-3: #8b5cf6;
-  --success: #10b981;
-  --danger: #fb7185;
-  --shadow: 0 18px 50px rgba(2, 8, 23, 0.45);
-  --radius-xl: 24px;
-  --radius-lg: 18px;
-  --radius-md: 14px;
-}
-
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  font-family: Inter, Arial, sans-serif;
-  color: var(--text);
-  background:
-    radial-gradient(circle at top left, rgba(34,211,238,0.14), transparent 28%),
-    radial-gradient(circle at top right, rgba(139,92,246,0.16), transparent 26%),
-    linear-gradient(180deg, #020617 0%, #08111f 45%, #0a1325 100%);
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  align-items: flex-start;
-  padding: 28px 20px 8px;
-  max-width: 1240px;
-  margin: 0 auto;
-}
-
-.eyebrow {
-  margin: 0 0 6px;
-  text-transform: uppercase;
-  letter-spacing: .16em;
-  font-size: .78rem;
-  color: var(--accent-2);
-}
-
-h1 {
-  margin: 0;
-  font-size: clamp(1.8rem, 3vw, 3rem);
-}
-
-.subtitle {
-  margin-top: 8px;
-  color: var(--muted);
-  max-width: 780px;
-}
-
-.top-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.container {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 16px 20px 40px;
-}
-
-.card {
-  background: var(--card);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow);
-  padding: 22px;
-  margin-bottom: 18px;
-  backdrop-filter: blur(14px);
-}
-
-.hero {
-  display: grid;
-  grid-template-columns: 1.7fr 1fr;
-  gap: 18px;
-  align-items: center;
-}
-
-.hero-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0,1fr));
-  gap: 10px;
-}
-
-.mini-pill {
-  padding: 16px;
-  border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, rgba(96,165,250,.18), rgba(34,211,238,.12));
-  border: 1px solid rgba(96,165,250,.25);
-  text-align: center;
-  font-weight: 700;
-}
-
-.btn, .upload-btn {
-  border: 0;
-  border-radius: 14px;
-  padding: 12px 16px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform .2s ease, opacity .2s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-}
-
-.btn:hover, .upload-btn:hover { transform: translateY(-1px); }
-.btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent-3)); color: white; }
-.btn.secondary { background: rgba(96,165,250,.14); color: var(--text); border: 1px solid rgba(96,165,250,.3); }
-.btn.ghost { background: rgba(255,255,255,.06); color: var(--text); border: 1px solid rgba(255,255,255,.08); }
-.hidden { display: none; }
-
-.term-box {
-  padding: 16px;
-  border-radius: var(--radius-lg);
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.08);
-}
-
-.note {
-  width: 100%;
-  min-height: 120px;
-  resize: vertical;
-  margin-top: 8px;
-  border-radius: 14px;
-  border: 1px solid rgba(148,163,184,.24);
-  background: rgba(2,6,23,.45);
-  color: var(--text);
-  padding: 14px;
-  outline: none;
-}
-
-.field-label {
-  display: block;
-  margin-top: 16px;
-  margin-bottom: 6px;
-  color: var(--muted);
-  font-size: .95rem;
-}
-
-.upload-row { margin-top: 12px; }
-.upload-btn {
-  background: linear-gradient(135deg, rgba(34,211,238,.16), rgba(96,165,250,.16));
-  border: 1px solid rgba(34,211,238,.28);
-  color: var(--text);
-}
-.upload-btn input { display: none; }
-
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 12px;
-  margin-top: 14px;
-}
-
-.thumb {
-  position: relative;
-  overflow: hidden;
-  border-radius: 16px;
-  border: 1px solid rgba(148,163,184,.18);
-  background: rgba(255,255,255,.04);
-}
-
-.thumb img {
-  display: block;
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
-
-.thumb button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: rgba(2,6,23,.8);
-  color: white;
-  border: 1px solid rgba(255,255,255,.14);
-  border-radius: 999px;
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-}
-
-.tree-section {
-  margin-top: 16px;
-  padding: 16px;
-  border-radius: 18px;
-  background: rgba(255,255,255,.03);
-  border: 1px solid rgba(255,255,255,.08);
-}
-
-.tree-section > .tree-title {
-  margin: 0 0 10px;
-  color: #cfe0ff;
-}
-
-.tree-list {
-  list-style: none;
-  padding-left: 18px;
-  margin: 0;
-  border-left: 1px dashed rgba(148,163,184,.24);
-}
-
-.tree-item {
-  margin: 8px 0;
-}
-
-.tree-label {
-  display: inline-block;
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, rgba(96,165,250,.14), rgba(139,92,246,.14));
-  border: 1px solid rgba(96,165,250,.2);
-}
-
-.table-wrap {
-  overflow-x: auto;
-  margin-top: 14px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 720px;
-}
-
-th, td {
-  border: 1px solid rgba(148,163,184,.18);
-  padding: 12px;
-  vertical-align: top;
-}
-
-th {
-  background: rgba(96,165,250,.12);
-  text-align: left;
-}
-
-td[contenteditable="true"] {
-  background: rgba(2,6,23,.3);
-}
-
-.row-actions {
-  margin-top: 12px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.print-note {
-  color: var(--muted);
-}
-
-@media (max-width: 900px) {
-  .hero, .topbar {
-    grid-template-columns: 1fr;
-    display: grid;
-  }
-}
-
-@media print {
-  body {
-    background: white;
-    color: black;
-  }
-  .top-actions,
-  .upload-row,
-  .thumb button,
-  #installBtn {
-    display: none !important;
-  }
-  .card {
-    box-shadow: none;
-    border: 1px solid #ddd;
-    background: white;
-    color: black;
-  }
-  .tree-label {
-    color: black;
-    border: 1px solid #bbb;
-    background: #f5f5f5;
-  }
-  .note {
-    color: black;
-    background: white;
-    border: 1px solid #ccc;
-  }
-}
-```
-
----
-
-## 3) `data.js`
-
-```javascript
-const roteiroData = {
-  titulo: "CRÂNIO",
-  itens: [
-    {
-      nome: "1. Frontal",
-      itens: [
-        { nome: "a. Escama frontal" },
-        { nome: "b. Túber frontal" },
-        { nome: "c. Arco superciliar" },
-        { nome: "d. Glabela" },
-        { nome: "e. Margem supra-orbital" },
-        { nome: "f. Incisura supra-orbital (forame supra-orbital)" },
-        { nome: "g. Parte orbital" },
-        { nome: "h. Parte nasal" },
-        { nome: "i. Sutura frontal – Sutura metópica" },
-        { nome: "j. Seio frontal" }
-      ]
-    },
-    {
-      nome: "2. Occipital",
-      itens: [
-        { nome: "a. Protuberância occipital externa" },
-        { nome: "b. Crista occipital externa" },
-        { nome: "c. Linha nucal superior" },
-        { nome: "d. Linha nucal inferior" },
-        { nome: "e. Protuberância occipital interna" },
-        { nome: "f. Crista occipital interna" },
-        { nome: "g. Sulco do seio transverso" },
-        { nome: "h. Sulco do seio sagital superior" },
-        { nome: "i. Sulco do seio sigmoide" },
-        { nome: "j. Sulco do seio petroso inferior" },
-        { nome: "k. Côndilo occipital" },
-        { nome: "l. Canal do nervo hipoglosso" },
-        { nome: "m. Canal condilar" },
-        { nome: "n. Forame magno" },
-        { nome: "o. Forame jugular" },
-        { nome: "p. Parte basilar" },
-        { nome: "q. Clivo" },
-        { nome: "r. Fossa cerebelar" },
-        { nome: "s. Fossa cerebral" }
-      ]
-    },
-    {
-      nome: "3. Etmoide",
-      itens: [
-        { nome: "a. Lâmina perpendicular" },
-        { nome: "b. Lâmina cribriforme" },
-        { nome: "c. Lâmina orbital" },
-        { nome: "d. Crista etmoidal" },
-        { nome: "e. Concha nasal superior" },
-        { nome: "f. Concha nasal média" },
-        { nome: "g. Seio etmoidal" },
-        { nome: "h. Células etmoidais anteriores, médias e posteriores" }
-      ]
-    },
-    {
-      nome: "4. Mandíbula",
-      itens: [
-        { nome: "a. Corpo da mandíbula" },
-        { nome: "b. Ramo da mandíbula" },
-        { nome: "c. Ângulo da mandíbula" },
-        { nome: "d. Tuberosidade massetérica" },
-        { nome: "e. Tuberosidade pterigoidea" },
-        { nome: "f. Base da mandíbula" },
-        { nome: "g. Sínfise da mandíbula" },
-        { nome: "h. Protuberância mentual" },
-        { nome: "i. Tubérculo mentual" },
-        { nome: "j. Forame mentual" },
-        { nome: "k. Parte alveolar" },
-        { nome: "l. Alvéolos dentais" },
-        { nome: "m. Septos interalveolares" },
-        { nome: "n. Septos interradiculares" },
-        { nome: "o. Trígono retromolar" },
-        { nome: "p. Linha oblíqua" },
-        {
-          nome: "q. Processo condilar",
-          itens: [
-            { nome: "i. Cabeça da mandíbula" },
-            { nome: "ii. Colo da mandíbula" },
-            { nome: "iii. Fóvea pterigoidea" }
-          ]
-        },
-        {
-          nome: "r. Processo coronoide",
-          itens: [
-            { nome: "i. Crista temporal" }
-          ]
-        },
-        { nome: "s. Incisura da mandíbula" },
-        { nome: "t. Forame da mandíbula" },
-        { nome: "u. Canal da mandíbula" },
-        { nome: "v. Língula da mandíbula" },
-        { nome: "w. Fóvea submentual" },
-        { nome: "x. Espinha geniana" },
-        { nome: "y. Fossa digástrica" },
-        { nome: "z. Fóvea submandibular" },
-        { nome: "aa. Linha milo-hioidea" },
-        { nome: "bb. Toro mandibular" }
-      ]
-    },
-    {
-      nome: "5. Parietal",
-      itens: [
-        {
-          nome: "a. Face interna",
-          itens: [
-            { nome: "i. Sulco do seio sagital superior" }
-          ]
-        },
-        {
-          nome: "b. Face externa",
-          itens: [
-            { nome: "i. Linha temporal superior" },
-            { nome: "ii. Linha temporal inferior" },
-            { nome: "iii. Túber parietal (eminência parietal)" },
-            { nome: "iv. Vértice" }
-          ]
-        },
-        { nome: "c. Margem frontal" },
-        { nome: "d. Margem escamosa" },
-        { nome: "e. Margem occipital" },
-        { nome: "f. Margem sagital" },
-        { nome: "g. Forame parietal" }
-      ]
-    },
-    {
-      nome: "6. Temporal",
-      itens: [
-        { nome: "a. Parte escamosa" },
-        { nome: "b. Parte timpânica" },
-        { nome: "c. Parte petrosa" },
-        { nome: "d. Processo mastoide" },
-        { nome: "e. Incisura mastoidea" },
-        { nome: "f. Sulco da artéria occipital" },
-        { nome: "g. Poro/meato acústico externo" },
-        { nome: "h. Poro/meato acústico interno" },
-        { nome: "i. Processo estiloide" },
-        { nome: "j. Forame estilomastoideo" },
-        { nome: "k. Canal carótico" },
-        { nome: "l. Forame lacerado (artefato de crânio seco; in vivo é fechado por uma cartilagem atravessada por pequenas veias e ramos da artéria meníngea)" },
-        { nome: "m. Fossa mandibular" },
-        { nome: "n. Tubérculo articular" },
-        { nome: "o. Arco zigomático" },
-        { nome: "p. Fossa temporal" },
-        { nome: "q. Fossa infratemporal" },
-        { nome: "r. Sulco do seio sigmoide" }
-      ]
-    },
-    {
-      nome: "7. Esfenoide",
-      itens: [
-        { nome: "a. Corpo" },
-        { nome: "b. Asa menor" },
-        { nome: "c. Asa maior" },
-        { nome: "d. Sela turca" },
-        { nome: "e. Tubérculo da sela" },
-        { nome: "f. Fossa hipofisial" },
-        { nome: "g. Processo clinóide anterior" },
-        { nome: "h. Processo clinóide posterior" },
-        { nome: "i. Canal óptico" },
-        { nome: "j. Fissura orbital superior" },
-        { nome: "k. Fissura orbital inferior" },
-        { nome: "l. Forame redondo" },
-        { nome: "m. Forame oval" },
-        { nome: "n. Forame espinhoso" },
-        { nome: "o. Processo pterigoide" },
-        { nome: "p. Lâmina lateral do processo pterigoide" },
-        { nome: "q. Lâmina medial do processo pterigoide" },
-        { nome: "r. Fossa pterigoidea" },
-        { nome: "s. Hâmulo pterigoideo" },
-        { nome: "t. Crista infratemporal" },
-        { nome: "u. Fossa pterigopalatina" },
-        { nome: "v. Seio esfenoidal" },
-        { nome: "w. Cóanos" }
-      ]
-    },
-    {
-      nome: "8. Vômer",
-      itens: [
-        { nome: "a. Crista coanal do vômer" }
-      ]
-    },
-    {
-      nome: "9. Palatino",
-      itens: [
-        { nome: "a. Lâmina perpendicular" },
-        { nome: "b. Lâmina horizontal" },
-        { nome: "c. Forame palatino maior" },
-        { nome: "d. Forames palatinos menores" },
-        { nome: "e. Espinha nasal posterior" },
-        { nome: "f. Processo orbital" }
-      ]
-    },
-    {
-      nome: "10. Maxila",
-      itens: [
-        { nome: "a. Corpo da maxila" },
-        { nome: "b. Seio maxilar" },
-        {
-          nome: "c. Face orbital",
-          itens: [
-            { nome: "i. Sulco infra-orbital" },
-            { nome: "ii. Canal infra-orbital" }
-          ]
-        },
-        { nome: "d. Margem infra-orbital" },
-        { nome: "e. Forame infra-orbital" },
-        { nome: "f. Fossa canina" },
-        { nome: "g. Espinha nasal anterior" },
-        { nome: "h. Túber da maxila" },
-        { nome: "i. Processo frontal" },
-        { nome: "j. Processo zigomático" },
-        {
-          nome: "k. Processo alveolar",
-          itens: [
-            { nome: "i. Alvéolos dentais" },
-            { nome: "ii. Septo interalveolar" },
-            { nome: "iii. Septo interadicular" },
-            { nome: "iv. Forame incisivo" }
-          ]
-        },
-        {
-          nome: "l. Processo palatino",
-          itens: [
-            { nome: "i. Toro palatino" }
-          ]
-        },
-        { nome: "m. Abertura piriforme" }
-      ]
-    },
-    { nome: "11. Nasal" },
-    {
-      nome: "12. Lacrimal",
-      itens: [
-        { nome: "a. Sulco lacrimal" }
-      ]
-    },
-    { nome: "13. Concha nasal inferior" },
-    {
-      nome: "14. Zigomático",
-      itens: [
-        { nome: "a. Processo frontal" },
-        { nome: "b. Processo temporal" },
-        { nome: "c. Forame zigomaticofrontal" }
-      ]
-    },
-    { nome: "15. Fontículo anterior" },
-    { nome: "16. Fontículo posterior" },
-    { nome: "17. Fontículo ântero-lateral" },
-    { nome: "18. Fontículo póstero-lateral" },
-    { nome: "19. Sutura sagital" },
-    { nome: "20. Sutura coronal" },
-    { nome: "21. Sutura lambdoidea" },
-    { nome: "22. Sutura occipitomastóidea" },
-    { nome: "23. Sutura parietomastóidea" },
-    { nome: "24. Sutura escamosa" },
-    { nome: "25. Sutura esfenoparietal" },
-    { nome: "26. Fissura petrotimpânica" },
-    { nome: "27. Sutura frontonasal" },
-    { nome: "28. Sutura internasal" },
-    { nome: "29. Sutura nasomaxilar" },
-    { nome: "30. Sutura intermaxilar" },
-    { nome: "31. Sutura zigomaticamaxilar" },
-    { nome: "32. Sutura palatina mediana" },
-    { nome: "33. Sutura palatina transversa" },
-    { nome: "34. Ossos suturais" },
-    {
-      nome: "35. Calvária",
-      itens: [
-        { nome: "a. Sulcos arteriovenosos" },
-        { nome: "b. Impressões dos giros" },
-        { nome: "c. Fovéolas granulares" }
-      ]
-    },
-    { nome: "36. Base externa do crânio" },
-    {
-      nome: "37. Base interna do crânio",
-      itens: [
-        { nome: "a. Fossa anterior do crânio" },
-        { nome: "b. Fossa média do crânio" },
-        { nome: "c. Fossa posterior do crânio" },
-        { nome: "d. Fossa cerebelar" }
-      ]
-    },
-    {
-      nome: "38. Ossículos da audição",
-      itens: [
-        { nome: "a. Martelo" },
-        { nome: "b. Bigorna" },
-        { nome: "c. Estribo" }
-      ]
+    function showSaved(){
+      saveMsg.style.display = 'block';
+      clearTimeout(window._saveMsgTimer);
+      window._saveMsgTimer = setTimeout(() => saveMsg.style.display = 'none', 1400);
     }
-  ]
-};
 
-const arquiteturaLongos = [
-  "Observe a arquitetura óssea dos ossos longos e identifique:",
-  "Diáfise",
-  "Epífise proximal",
-  "Epífise distal",
-  "Metáfise",
-  "Cartilagem epifisial",
-  "Lâmina epifisial",
-  "Linha epifisial",
-  "Substância óssea compacta",
-  "Substância óssea esponjosa",
-  "Cavidade medular"
-];
+    function addEmptyRow(){
+      const tr = document.createElement('tr');
+      for(let i=0;i<3;i++){
+        const td = document.createElement('td');
+        td.contentEditable = 'true';
+        td.spellcheck = false;
+        tr.appendChild(td);
+      }
+      tableBody.appendChild(tr);
+    }
 
-const arquiteturaPlanos = [
-  "Observe a arquitetura óssea dos ossos planos do crânio e identifique:",
-  "Díploe",
-  "Lâmina externa da calvária",
-  "Lâmina interna da calvária"
-];
-```
+    function resetRows(){
+      tableBody.innerHTML = '';
+      for(let i=0;i<12;i++) addEmptyRow();
+    }
 
----
+    function renderRoteiro(){
+      const root = document.getElementById('roteiro-root');
+      const ul = document.createElement('ul');
+      ul.className = 'tree-list';
 
-## 4) `app.js`
+      roteiroData.forEach(bloco => {
+        const li = document.createElement('li');
+        li.className = 'tree-item';
 
-```javascript
-const emptyRowsCount = 12;
-const state = {
-  deferredPrompt: null,
-  images: JSON.parse(localStorage.getItem("roteiro-images") || "{}")
-};
+        const principal = document.createElement('span');
+        principal.className = 'tree-label';
+        principal.textContent = bloco.nome;
+        li.appendChild(principal);
 
-function saveNote(id, value) {
-  localStorage.setItem(`note-${id}`, value);
-}
+        if(bloco.itens && bloco.itens.length){
+          const sub = document.createElement('ul');
+          sub.className = 'tree-list';
+          bloco.itens.forEach(item => {
+            const subLi = document.createElement('li');
+            subLi.className = 'tree-item';
+            const subLabel = document.createElement('span');
+            subLabel.className = 'tree-label';
+            subLabel.textContent = item;
+            subLi.appendChild(subLabel);
+            sub.appendChild(subLi);
+          });
+          li.appendChild(sub);
+        }
 
-function loadNotes() {
-  document.querySelectorAll(".note").forEach(textarea => {
-    const id = textarea.dataset.noteId;
-    textarea.value = localStorage.getItem(`note-${id}`) || "";
-    textarea.addEventListener("input", () => saveNote(id, textarea.value));
-  });
-}
+        ul.appendChild(li);
+      });
 
-function createEmptyRow() {
-  const tr = document.createElement("tr");
-  ["", "", ""].forEach(text => {
-    const td = document.createElement("td");
-    td.contentEditable = "true";
-    td.spellcheck = false;
-    td.textContent = text;
-    tr.appendChild(td);
-  });
-  return tr;
-}
+      root.appendChild(ul);
+    }
 
-function renderEmptyRows() {
-  const tbody = document.getElementById("ossosTable");
-  tbody.innerHTML = "";
-  for (let i = 0; i < emptyRowsCount; i += 1) {
-    tbody.appendChild(createEmptyRow());
-  }
-}
+    function loadNotes(){
+      document.querySelectorAll('textarea[data-note-id]').forEach(el => {
+        const id = el.dataset.noteId;
+        el.value = localStorage.getItem('note-' + id) || '';
+        el.addEventListener('input', () => {
+          localStorage.setItem('note-' + id, el.value);
+          showSaved();
+        });
+      });
+    }
 
-function renderSimpleList(targetId, items) {
-  const target = document.getElementById(targetId);
-  const wrapper = document.createElement("div");
-  const first = document.createElement("p");
-  first.className = "tree-title";
-  first.textContent = items[0];
-  wrapper.appendChild(first);
+    function saveImages(){
+      localStorage.setItem('roteiro-images', JSON.stringify(images));
+    }
 
-  const ul = document.createElement("ul");
-  ul.className = "tree-list";
+    function renderGallery(sectionId){
+      const gallery = document.getElementById('gallery-' + sectionId);
+      gallery.innerHTML = '';
+      (images[sectionId] || []).forEach((src, index) => {
+        const box = document.createElement('div');
+        box.className = 'thumb';
 
-  items.slice(1).forEach(item => {
-    const li = document.createElement("li");
-    li.className = "tree-item";
-    const span = document.createElement("span");
-    span.className = "tree-label";
-    span.textContent = item;
-    li.appendChild(span);
-    ul.appendChild(li);
-  });
+        const img = document.createElement('img');
+        img.src = src;
 
-  wrapper.appendChild(ul);
-  target.appendChild(wrapper);
-}
-
-function renderTreeNode(node) {
-  const li = document.createElement("li");
-  li.className = "tree-item";
-
-  const label = document.createElement("span");
-  label.className = "tree-label";
-  label.textContent = node.nome;
-  li.appendChild(label);
-
-  if (node.itens && node.itens.length) {
-    const ul = document.createElement("ul");
-    ul.className = "tree-list";
-    node.itens.forEach(child => ul.appendChild(renderTreeNode(child)));
-    li.appendChild(ul);
-  }
-
-  return li;
-}
-
-function renderRoteiro() {
-  const root = document.getElementById("roteiro-root");
-
-  const section = document.createElement("section");
-  section.className = "tree-section";
-
-  const title = document.createElement("h3");
-  title.className = "tree-title";
-  title.textContent = roteiroData.titulo;
-  section.appendChild(title);
-
-  const ul = document.createElement("ul");
-  ul.className = "tree-list";
-  roteiroData.itens.forEach(item => ul.appendChild(renderTreeNode(item)));
-  section.appendChild(ul);
-  root.appendChild(section);
-}
-
-function persistImages() {
-  localStorage.setItem("roteiro-images", JSON.stringify(state.images));
-}
-
-function renderGallery(sectionId) {
-  const gallery = document.getElementById(`gallery-${sectionId}`);
-  if (!gallery) return;
-  gallery.innerHTML = "";
-
-  const images = state.images[sectionId] || [];
-  images.forEach((src, index) => {
-    const box = document.createElement("div");
-    box.className = "thumb";
-
-    const img = document.createElement("img");
-    img.src = src;
-    img.alt = `Imagem ${index + 1}`;
-
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.innerHTML = "×";
-    btn.title = "Remover imagem";
-    btn.addEventListener("click", () => {
-      state.images[sectionId].splice(index, 1);
-      persistImages();
-      renderGallery(sectionId);
-    });
-
-    box.appendChild(img);
-    box.appendChild(btn);
-    gallery.appendChild(box);
-  });
-}
-
-function handleImageInputs() {
-  document.querySelectorAll("input[type='file'][data-image-id]").forEach(input => {
-    const sectionId = input.dataset.imageId;
-    renderGallery(sectionId);
-
-    input.addEventListener("change", event => {
-      const files = Array.from(event.target.files || []);
-      if (!files.length) return;
-
-      if (!state.images[sectionId]) state.images[sectionId] = [];
-
-      let processed = 0;
-      files.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = e => {
-          state.images[sectionId].push(e.target.result);
-          processed += 1;
-          if (processed === files.length) {
-            persistImages();
-            renderGallery(sectionId);
-            input.value = "";
-          }
+        const del = document.createElement('button');
+        del.textContent = '×';
+        del.onclick = () => {
+          images[sectionId].splice(index, 1);
+          saveImages();
+          renderGallery(sectionId);
         };
-        reader.readAsDataURL(file);
+
+        box.appendChild(img);
+        box.appendChild(del);
+        gallery.appendChild(box);
+      });
+    }
+
+    function setupImageInputs(){
+      document.querySelectorAll('input[data-image-id]').forEach(input => {
+        const sectionId = input.dataset.imageId;
+        renderGallery(sectionId);
+
+        input.addEventListener('change', e => {
+          const files = Array.from(e.target.files || []);
+          if(!files.length) return;
+          if(!images[sectionId]) images[sectionId] = [];
+
+          let done = 0;
+          files.forEach(file => {
+            const reader = new FileReader();
+            reader.onload = ev => {
+              images[sectionId].push(ev.target.result);
+              done++;
+              if(done === files.length){
+                saveImages();
+                renderGallery(sectionId);
+                input.value = '';
+              }
+            };
+            reader.readAsDataURL(file);
+          });
+        });
+      });
+    }
+
+    noteBtn.addEventListener('click', () => {
+      document.querySelectorAll('.note-wrapper').forEach(box => {
+        box.hidden = !box.hidden;
       });
     });
-  });
-}
 
-function toggleAllNotes() {
-  const notes = document.querySelectorAll(".note-wrapper");
-  const hidden = Array.from(notes).every(note => note.hasAttribute("hidden"));
-  notes.forEach(note => {
-    if (hidden) {
-      note.removeAttribute("hidden");
-    } else {
-      note.setAttribute("hidden", "hidden");
-    }
-  });
-}
+    pdfBtn.addEventListener('click', () => window.print());
+    addRowBtn.addEventListener('click', addEmptyRow);
+    resetRowsBtn.addEventListener('click', resetRows);
 
-function setupButtons() {
-  document.getElementById("pdfBtn").addEventListener("click", () => window.print());
-  document.getElementById("addRowBtn").addEventListener("click", () => {
-    document.getElementById("ossosTable").appendChild(createEmptyRow());
-  });
-  document.getElementById("resetRowsBtn").addEventListener("click", renderEmptyRows);
-
-  const noteBtn = document.getElementById("noteBtn");
-  if (noteBtn) {
-    noteBtn.addEventListener("click", toggleAllNotes);
-  }
-}
-
-function registerSW() {
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./service-worker.js");
-  }
-}
-
-function setupInstallPrompt() {
-  const installBtn = document.getElementById("installBtn");
-
-  window.addEventListener("beforeinstallprompt", e => {
-    e.preventDefault();
-    state.deferredPrompt = e;
-    installBtn.classList.remove("hidden");
-  });
-
-  installBtn.addEventListener("click", async () => {
-    if (!state.deferredPrompt) return;
-    state.deferredPrompt.prompt();
-    await state.deferredPrompt.userChoice;
-    state.deferredPrompt = null;
-    installBtn.classList.add("hidden");
-  });
-}
-
-function init() {
-  renderEmptyRows();
-  renderSimpleList("section-3", arquiteturaLongos);
-  renderSimpleList("section-4", arquiteturaPlanos);
-  renderRoteiro();
-  loadNotes();
-  handleImageInputs();
-  setupButtons();
-  registerSW();
-  setupInstallPrompt();
-}
-
-document.addEventListener("DOMContentLoaded", init);
-```
-
----
-
-## 5) `manifest.json`
-
-```json
-{
-  "name": "Roteiro Prático de Anatomia",
-  "short_name": "Anatomia",
-  "start_url": "./index.html",
-  "scope": "./",
-  "display": "standalone",
-  "background_color": "#08111f",
-  "theme_color": "#0f172a",
-  "description": "PWA com roteiro prático de anatomia, imagens, anotações, PDF e modo offline.",
-  "icons": [
-    {
-      "src": "icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
-}
-```
-
----
-
-## 6) `service-worker.js`
-
-```javascript
-const CACHE_NAME = "roteiro-anatomia-pwa-v1";
-const FILES_TO_CACHE = [
-  "./",
-  "./index.html",
-  "./style.css",
-  "./data.js",
-  "./app.js",
-  "./manifest.json"
-];
-
-self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE))
-  );
-  self.skipWaiting();
-});
-
-self.addEventListener("activate", event => {
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys.map(key => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
-          }
-        })
-      )
-    )
-  );
-  self.clients.claim();
-});
-
-self.addEventListener("fetch", event => {
-  event.respondWith(
-    caches.match(event.request).then(response => response || fetch(event.request))
-  );
-});
-```
-
----
-
-## 7) Estrutura do repositório
-
-```text
-/roteiro-anatomia-pwa
-  ├── index.html
-  ├── style.css
-  ├── data.js
-  ├── app.js
-  ├── manifest.json
-  ├── service-worker.js
-  └── /icons
-      ├── icon-192.png
-      └── icon-512.png
-```
-
----
-
-## 8) Como publicar no GitHub Pages
-
-1. Crie o repositório.
-2. Envie esses arquivos.
-3. Vá em **Settings > Pages**.
-4. Em **Build and deployment**, escolha **Deploy from a branch**.
-5. Selecione **main** e a pasta **root**.
-6. Salve.
-7. O GitHub gerará o link do app.
-
----
-
-## 9) Observação técnica importante
-
-Os termos anatômicos incluídos aqui foram mantidos exatamente como você enviou nesta conversa, até o item **38. Ossículos da audição > c. Estribo**. Se houver continuação do roteiro depois de Estribo, basta acrescentar no `data.js` no mesmo padrão, sem alterar a estrutura do app.
-
-```
-```
+    resetRows();
+    renderRoteiro();
+    loadNotes();
+    setupImageInputs();
+  </script>
+</body>
+</html>

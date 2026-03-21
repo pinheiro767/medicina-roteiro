@@ -56,7 +56,10 @@
       flex-wrap:wrap;
     }
 
-    button,label.btn-upload{
+    button,
+    label.btn-upload,
+    label.btn-camera,
+    label.btn-file{
       border:none;
       border-radius:12px;
       padding:12px 16px;
@@ -118,13 +121,39 @@
     .note-wrapper[hidden]{display:none}
 
     .upload-row{margin-top:12px}
+
+    .upload-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
     .btn-upload{
       display:inline-block;
       background:#16384a;
       border:1px solid #2b6d8f;
       color:#fff;
     }
-    .btn-upload input{display:none}
+
+    .btn-camera{
+      display:inline-block;
+      background:#1d4ed8;
+      border:1px solid #60a5fa;
+      color:#fff;
+    }
+
+    .btn-file{
+      display:inline-block;
+      background:#14532d;
+      border:1px solid #4ade80;
+      color:#fff;
+    }
+
+    .btn-upload input,
+    .hidden-input{
+      display:none;
+    }
 
     .gallery{
       display:grid;
@@ -361,7 +390,7 @@
 
     @media print{
       body{background:#fff;color:#000}
-      .actions,.upload-row,.thumb button,.thumb-actions,.btn-add,.btn-reset,.ok,.small-help,.lightbox{display:none !important}
+      .actions,.upload-row,.upload-actions,.thumb button,.thumb-actions,.btn-add,.btn-reset,.ok,.small-help,.lightbox{display:none !important}
       .card,.term-box,.bone-card{background:#fff;color:#000;border:1px solid #bbb;box-shadow:none}
       textarea{background:#fff;color:#000;border:1px solid #bbb}
       th,td{border:1px solid #bbb;color:#000}
@@ -395,10 +424,14 @@
         <label class="field-label">Resposta / anotações</label>
         <textarea data-note-id="sec-1" placeholder="Digite aqui..."></textarea>
       </div>
-      <div class="upload-row">
-        <label class="btn-upload">
-          <input type="file" accept="image/*" multiple data-image-id="sec-1">
-          Tirar foto ou inserir imagens
+      <div class="upload-actions">
+        <label class="btn-camera">
+          <input class="hidden-input" type="file" accept="image/*" capture="environment" multiple data-image-id="sec-1">
+          Tirar foto
+        </label>
+        <label class="btn-file">
+          <input class="hidden-input" type="file" accept="image/*" multiple data-image-id="sec-1">
+          Inserir arquivo
         </label>
       </div>
       <div class="gallery" id="gallery-sec-1"></div>
@@ -431,10 +464,14 @@
         <label class="field-label">Anotações</label>
         <textarea data-note-id="sec-2" placeholder="Digite aqui..."></textarea>
       </div>
-      <div class="upload-row">
-        <label class="btn-upload">
-          <input type="file" accept="image/*" multiple data-image-id="sec-2">
-          Tirar foto ou inserir imagens
+      <div class="upload-actions">
+        <label class="btn-camera">
+          <input class="hidden-input" type="file" accept="image/*" capture="environment" multiple data-image-id="sec-2">
+          Tirar foto
+        </label>
+        <label class="btn-file">
+          <input class="hidden-input" type="file" accept="image/*" multiple data-image-id="sec-2">
+          Inserir arquivo
         </label>
       </div>
       <div class="gallery" id="gallery-sec-2"></div>
@@ -460,10 +497,14 @@
         <label class="field-label">Anotações</label>
         <textarea data-note-id="sec-3" placeholder="Digite aqui..."></textarea>
       </div>
-      <div class="upload-row">
-        <label class="btn-upload">
-          <input type="file" accept="image/*" multiple data-image-id="sec-3">
-          Tirar foto ou inserir imagens
+      <div class="upload-actions">
+        <label class="btn-camera">
+          <input class="hidden-input" type="file" accept="image/*" capture="environment" multiple data-image-id="sec-3">
+          Tirar foto
+        </label>
+        <label class="btn-file">
+          <input class="hidden-input" type="file" accept="image/*" multiple data-image-id="sec-3">
+          Inserir arquivo
         </label>
       </div>
       <div class="gallery" id="gallery-sec-3"></div>
@@ -482,10 +523,14 @@
         <label class="field-label">Anotações</label>
         <textarea data-note-id="sec-4" placeholder="Digite aqui..."></textarea>
       </div>
-      <div class="upload-row">
-        <label class="btn-upload">
-          <input type="file" accept="image/*" multiple data-image-id="sec-4">
-          Tirar foto ou inserir imagens
+      <div class="upload-actions">
+        <label class="btn-camera">
+          <input class="hidden-input" type="file" accept="image/*" capture="environment" multiple data-image-id="sec-4">
+          Tirar foto
+        </label>
+        <label class="btn-file">
+          <input class="hidden-input" type="file" accept="image/*" multiple data-image-id="sec-4">
+          Inserir arquivo
         </label>
       </div>
       <div class="gallery" id="gallery-sec-4"></div>
@@ -500,10 +545,14 @@
         <label class="field-label">Anotações gerais</label>
         <textarea data-note-id="sec-geral" placeholder="Digite aqui..."></textarea>
       </div>
-      <div class="upload-row">
-        <label class="btn-upload">
-          <input type="file" accept="image/*" multiple data-image-id="sec-geral">
-          Tirar foto ou inserir imagens gerais
+      <div class="upload-actions">
+        <label class="btn-camera">
+          <input class="hidden-input" type="file" accept="image/*" capture="environment" multiple data-image-id="sec-geral">
+          Tirar foto
+        </label>
+        <label class="btn-file">
+          <input class="hidden-input" type="file" accept="image/*" multiple data-image-id="sec-geral">
+          Inserir arquivo
         </label>
       </div>
       <div class="gallery" id="gallery-sec-geral"></div>
@@ -1222,11 +1271,15 @@
           titleItem.textContent = item.nome;
 
           const uploadRow = document.createElement('div');
-          uploadRow.className = 'upload-row';
+          uploadRow.className = 'upload-actions';
           uploadRow.innerHTML = `
-            <label class="btn-upload">
-              <input type="file" accept="image/*" multiple data-image-id="item-${item.imageId}">
-              Tirar foto ou inserir imagens de ${item.nome}
+            <label class="btn-camera">
+              <input class="hidden-input" type="file" accept="image/*" capture="environment" multiple data-image-id="item-${item.imageId}">
+              Tirar foto
+            </label>
+            <label class="btn-file">
+              <input class="hidden-input" type="file" accept="image/*" multiple data-image-id="item-${item.imageId}">
+              Inserir arquivo
             </label>
           `;
 

@@ -28,7 +28,7 @@
     }
 
     .wrap{
-      max-width:1250px;
+      max-width:1320px;
       margin:0 auto;
       padding:20px;
     }
@@ -115,7 +115,7 @@
 
     .gallery{
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
       gap:12px;
       margin-top:12px;
     }
@@ -130,17 +130,44 @@
 
     .thumb img{
       width:100%;
-      height:170px;
-      object-fit:cover;
+      height:220px;
+      object-fit:contain;
       display:block;
+      background:#0a1020;
+    }
+
+    /* Galeria retrato para cada osso */
+    .portrait-gallery{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,320px));
+      gap:14px;
+      margin-top:12px;
+      justify-content:start;
+    }
+
+    .portrait-gallery .thumb{
+      background:#0a1020;
+      min-height:420px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px;
+    }
+
+    .portrait-gallery .thumb img{
+      width:100%;
+      height:400px;
+      object-fit:contain;
+      border-radius:10px;
+      background:#0a1020;
     }
 
     .thumb button{
       position:absolute;
       right:8px;
       top:8px;
-      width:30px;
-      height:30px;
+      width:32px;
+      height:32px;
       border-radius:999px;
       background:rgba(0,0,0,.75);
       color:#fff;
@@ -148,6 +175,7 @@
       padding:0;
       font-size:18px;
       line-height:1;
+      z-index:2;
     }
 
     .table-wrap{overflow:auto;margin-top:12px}
@@ -171,8 +199,8 @@
       background:#101a31;
       border:1px solid #314b86;
       border-radius:16px;
-      padding:14px;
-      margin-top:14px;
+      padding:16px;
+      margin-top:16px;
     }
 
     .bone-head{
@@ -181,18 +209,19 @@
       gap:12px;
       align-items:center;
       flex-wrap:wrap;
-      margin-bottom:10px;
+      margin-bottom:14px;
     }
 
     .bone-title{
       margin:0;
-      font-size:1.05rem;
+      font-size:1.08rem;
     }
 
     .bone-content{
       display:grid;
-      grid-template-columns:1.6fr 1fr;
-      gap:14px;
+      grid-template-columns:1.1fr 1fr;
+      gap:18px;
+      align-items:start;
     }
 
     .bone-list{
@@ -223,9 +252,21 @@
       margin-top:8px;
     }
 
-    @media (max-width: 900px){
+    @media (max-width: 980px){
       .bone-content{
         grid-template-columns:1fr;
+      }
+
+      .portrait-gallery{
+        grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      }
+
+      .portrait-gallery .thumb{
+        min-height:360px;
+      }
+
+      .portrait-gallery .thumb img{
+        height:340px;
       }
     }
 
@@ -360,7 +401,7 @@
     <section class="card">
       <h2>ESQUELETO AXIAL</h2>
       <h3>CRÂNIO</h3>
-      <p class="small-help">Cada bloco abaixo permite tirar foto do material ou inserir imagens específicas daquela estrutura.</p>
+      <p class="small-help">Cada bloco abaixo permite tirar foto do material ou inserir imagens específicas daquela estrutura. As fotos ficam em formato retrato, maiores e sem achatamento.</p>
       <div id="bonesRoot"></div>
 
       <div class="note-wrapper">
@@ -836,6 +877,13 @@
       if(!gallery) return;
       gallery.innerHTML = '';
 
+      const isBoneGallery = sectionId.startsWith('bone-');
+      if (isBoneGallery) {
+        gallery.classList.add('portrait-gallery');
+      } else {
+        gallery.classList.remove('portrait-gallery');
+      }
+
       (images[sectionId] || []).forEach((src, index) => {
         const box = document.createElement('div');
         box.className = 'thumb';
@@ -936,7 +984,7 @@
         }
 
         const right = document.createElement('div');
-        right.innerHTML = `<div class="gallery" id="gallery-bone-${bone.imageId}"></div>`;
+        right.innerHTML = `<div class="gallery portrait-gallery" id="gallery-bone-${bone.imageId}"></div>`;
 
         content.appendChild(left);
         content.appendChild(right);

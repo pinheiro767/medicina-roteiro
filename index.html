@@ -15,9 +15,11 @@
       --accent:#66b3ff;
       --accent2:#8b7bff;
       --ok:#2dd4bf;
+      --danger:#fb7185;
     }
 
     *{box-sizing:border-box}
+
     body{
       margin:0;
       font-family:Arial, Helvetica, sans-serif;
@@ -26,7 +28,7 @@
     }
 
     .wrap{
-      max-width:1100px;
+      max-width:1250px;
       margin:0 auto;
       padding:20px;
     }
@@ -79,7 +81,7 @@
       margin-top:10px;
     }
 
-    h2,h3{margin-top:0}
+    h2,h3,h4{margin-top:0}
 
     textarea{
       width:100%;
@@ -144,6 +146,8 @@
       color:#fff;
       border:1px solid rgba(255,255,255,.15);
       padding:0;
+      font-size:18px;
+      line-height:1;
     }
 
     .table-wrap{overflow:auto;margin-top:12px}
@@ -163,19 +167,42 @@
 
     .row-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 
-    .tree-list{
-      list-style:none;
-      margin:0;
-      padding-left:18px;
-      border-left:1px dashed #3a4d80;
+    .bone-card{
+      background:#101a31;
+      border:1px solid #314b86;
+      border-radius:16px;
+      padding:14px;
+      margin-top:14px;
     }
-    .tree-item{margin:8px 0}
-    .tree-label{
-      display:inline-block;
-      padding:8px 12px;
-      border-radius:999px;
-      background:#18284a;
-      border:1px solid #304d8d;
+
+    .bone-head{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+
+    .bone-title{
+      margin:0;
+      font-size:1.05rem;
+    }
+
+    .bone-content{
+      display:grid;
+      grid-template-columns:1.6fr 1fr;
+      gap:14px;
+    }
+
+    .bone-list{
+      margin:0;
+      padding-left:20px;
+    }
+
+    .bone-list li{
+      margin:5px 0;
+      line-height:1.45;
     }
 
     .ok{
@@ -185,12 +212,28 @@
       display:none;
     }
 
+    .section-list li{
+      margin:6px 0;
+      line-height:1.45;
+    }
+
+    .small-help{
+      color:var(--muted);
+      font-size:.92rem;
+      margin-top:8px;
+    }
+
+    @media (max-width: 900px){
+      .bone-content{
+        grid-template-columns:1fr;
+      }
+    }
+
     @media print{
       body{background:#fff;color:#000}
-      .actions,.upload-row,.thumb button,.btn-add,.btn-reset,.ok{display:none !important}
-      .card,.term-box{background:#fff;color:#000;border:1px solid #bbb;box-shadow:none}
+      .actions,.upload-row,.thumb button,.btn-add,.btn-reset,.ok,.small-help{display:none !important}
+      .card,.term-box,.bone-card{background:#fff;color:#000;border:1px solid #bbb;box-shadow:none}
       textarea{background:#fff;color:#000;border:1px solid #bbb}
-      .tree-label{background:#f5f5f5;color:#000;border:1px solid #bbb}
       th,td{border:1px solid #bbb;color:#000}
       th{background:#eee}
     }
@@ -201,18 +244,18 @@
     <div class="top">
       <div>
         <h1>Roteiro Prático de Anatomia</h1>
-        <p class="sub">Versão estável para testar primeiro no PC.</p>
+        <p class="sub">GENERALIDADES e ESQUELETO AXIAL</p>
       </div>
       <div class="actions">
-        <button id="noteBtn" class="btn-note">Tomar nota</button>
-        <button id="pdfBtn" class="btn-pdf">Salvar em PDF</button>
+        <button id="noteBtn" class="btn-note" type="button">Tomar nota</button>
+        <button id="pdfBtn" class="btn-pdf" type="button">Salvar em PDF</button>
       </div>
     </div>
 
     <section class="card">
-      <h2>1.</h2>
+      <h2>GENERALIDADES e ESQUELETO AXIAL</h2>
       <div class="term-box">
-        <strong>Defina esqueleto axial e esqueleto apendicular.</strong>
+        <strong>1. Defina esqueleto axial e esqueleto apendicular.</strong>
       </div>
       <div class="note-wrapper">
         <label class="field-label">Resposta / anotações</label>
@@ -220,17 +263,16 @@
       </div>
       <div class="upload-row">
         <label class="btn-upload">
-          <input type="file" accept="image/*" multiple data-image-id="sec-1">
-          Inserir imagens
+          <input type="file" accept="image/*" capture="environment" multiple data-image-id="sec-1">
+          Tirar foto ou inserir imagens
         </label>
       </div>
       <div class="gallery" id="gallery-sec-1"></div>
     </section>
 
     <section class="card">
-      <h2>2.</h2>
       <div class="term-box">
-        <strong>Faça uma tabela (conforme modelo abaixo) com os nomes de todos os ossos do CH, classificando-os como esqueleto axial ou apendicular, e quanto à forma do osso.</strong>
+        <strong>2. Faça uma tabela (conforme modelo abaixo) com os nomes de todos os ossos do CH, classificando-os como esqueleto axial ou apendicular, e quanto à forma do osso.</strong>
       </div>
 
       <div class="table-wrap">
@@ -247,8 +289,8 @@
       </div>
 
       <div class="row-actions">
-        <button id="addRowBtn" class="btn-add">Adicionar linha</button>
-        <button id="resetRowsBtn" class="btn-reset">Restaurar linhas</button>
+        <button id="addRowBtn" class="btn-add" type="button">Adicionar linha</button>
+        <button id="resetRowsBtn" class="btn-reset" type="button">Restaurar linhas</button>
       </div>
 
       <div class="note-wrapper">
@@ -257,18 +299,17 @@
       </div>
       <div class="upload-row">
         <label class="btn-upload">
-          <input type="file" accept="image/*" multiple data-image-id="sec-2">
-          Inserir imagens
+          <input type="file" accept="image/*" capture="environment" multiple data-image-id="sec-2">
+          Tirar foto ou inserir imagens
         </label>
       </div>
       <div class="gallery" id="gallery-sec-2"></div>
     </section>
 
     <section class="card">
-      <h2>3.</h2>
       <div class="term-box">
-        <strong>Observe a arquitetura óssea dos ossos longos e identifique:</strong>
-        <ul>
+        <strong>3. Observe a arquitetura óssea dos ossos longos e identifique:</strong>
+        <ul class="section-list">
           <li>Diáfise</li>
           <li>Epífise proximal</li>
           <li>Epífise distal</li>
@@ -287,18 +328,17 @@
       </div>
       <div class="upload-row">
         <label class="btn-upload">
-          <input type="file" accept="image/*" multiple data-image-id="sec-3">
-          Inserir imagens
+          <input type="file" accept="image/*" capture="environment" multiple data-image-id="sec-3">
+          Tirar foto ou inserir imagens
         </label>
       </div>
       <div class="gallery" id="gallery-sec-3"></div>
     </section>
 
     <section class="card">
-      <h2>4.</h2>
       <div class="term-box">
-        <strong>Observe a arquitetura óssea dos ossos planos do crânio e identifique:</strong>
-        <ul>
+        <strong>4. Observe a arquitetura óssea dos ossos planos do crânio e identifique:</strong>
+        <ul class="section-list">
           <li>Díploe</li>
           <li>Lâmina externa da calvária</li>
           <li>Lâmina interna da calvária</li>
@@ -310,8 +350,8 @@
       </div>
       <div class="upload-row">
         <label class="btn-upload">
-          <input type="file" accept="image/*" multiple data-image-id="sec-4">
-          Inserir imagens
+          <input type="file" accept="image/*" capture="environment" multiple data-image-id="sec-4">
+          Tirar foto ou inserir imagens
         </label>
       </div>
       <div class="gallery" id="gallery-sec-4"></div>
@@ -320,27 +360,30 @@
     <section class="card">
       <h2>ESQUELETO AXIAL</h2>
       <h3>CRÂNIO</h3>
-      <div id="roteiro-root"></div>
+      <p class="small-help">Cada bloco abaixo permite tirar foto do material ou inserir imagens específicas daquela estrutura.</p>
+      <div id="bonesRoot"></div>
+
       <div class="note-wrapper">
         <label class="field-label">Anotações gerais</label>
         <textarea data-note-id="sec-geral" placeholder="Digite aqui..."></textarea>
       </div>
       <div class="upload-row">
         <label class="btn-upload">
-          <input type="file" accept="image/*" multiple data-image-id="sec-geral">
-          Inserir imagens
+          <input type="file" accept="image/*" capture="environment" multiple data-image-id="sec-geral">
+          Tirar foto ou inserir imagens gerais
         </label>
       </div>
       <div class="gallery" id="gallery-sec-geral"></div>
-      <div class="ok" id="saveMsg">Anotações salvas no navegador.</div>
+      <div class="ok" id="saveMsg">Anotações e imagens salvas no navegador.</div>
     </section>
   </div>
 
   <script>
-    const roteiroData = [
+    const bonesData = [
       {
         nome: "1. Frontal",
-        itens: [
+        imageId: "Frontal",
+        termos: [
           "a. Escama frontal",
           "b. Túber frontal",
           "c. Arco superciliar",
@@ -349,13 +392,14 @@
           "f. Incisura supra-orbital (forame supra-orbital)",
           "g. Parte orbital",
           "h. Parte nasal",
-          "i. Sutura frontal – Sutura metópica",
+          "i. Sutura frontal – Sutura metópica*",
           "j. Seio frontal"
         ]
       },
       {
         nome: "2. Occipital",
-        itens: [
+        imageId: "Occipital",
+        termos: [
           "a. Protuberância occipital externa",
           "b. Crista occipital externa",
           "c. Linha nucal superior",
@@ -379,7 +423,8 @@
       },
       {
         nome: "3. Etmoide",
-        itens: [
+        imageId: "Etmoide",
+        termos: [
           "a. Lâmina perpendicular",
           "b. Lâmina cribriforme",
           "c. Lâmina orbital",
@@ -392,7 +437,8 @@
       },
       {
         nome: "4. Mandíbula",
-        itens: [
+        imageId: "Mandibula",
+        termos: [
           "a. Corpo da mandíbula",
           "b. Ramo da mandíbula",
           "c. Ângulo da mandíbula",
@@ -429,7 +475,8 @@
       },
       {
         nome: "5. Parietal",
-        itens: [
+        imageId: "Parietal",
+        termos: [
           "a. Face interna",
           "i. Sulco do seio sagital superior",
           "b. Face externa",
@@ -446,7 +493,8 @@
       },
       {
         nome: "6. Temporal",
-        itens: [
+        imageId: "Temporal",
+        termos: [
           "a. Parte escamosa",
           "b. Parte timpânica",
           "c. Parte petrosa",
@@ -469,7 +517,8 @@
       },
       {
         nome: "7. Esfenoide",
-        itens: [
+        imageId: "Esfenoide",
+        termos: [
           "a. Corpo",
           "b. Asa menor",
           "c. Asa maior",
@@ -495,37 +544,210 @@
           "w. Cóanos"
         ]
       },
-      { nome: "8. Vômer", itens: ["a. Crista coanal do vômer"] },
-      { nome: "9. Palatino", itens: ["a. Lâmina perpendicular","b. Lâmina horizontal","c. Forame palatino maior","d. Forames palatinos menores","e. Espinha nasal posterior","f. Processo orbital"] },
-      { nome: "10. Maxila", itens: ["a. Corpo da maxila","b. Seio maxilar","c. Face orbital","i. Sulco infra-orbital","ii. Canal infra-orbital","d. Margem infra-orbital","e. Forame infra-orbital","f. Fossa canina","g. Espinha nasal anterior","h. Túber da maxila","i. Processo frontal","j. Processo zigomático","k. Processo alveolar","i. Alvéolos dentais","ii. Septo interalveolar","iii. Septo interadicular","iv. Forame incisivo","l. Processo palatino","i. Toro palatino","m. Abertura piriforme"] },
-      { nome: "11. Nasal", itens: [] },
-      { nome: "12. Lacrimal", itens: ["a. Sulco lacrimal"] },
-      { nome: "13. Concha nasal inferior", itens: [] },
-      { nome: "14. Zigomático", itens: ["a. Processo frontal","b. Processo temporal","c. Forame zigomaticofrontal"] },
-      { nome: "15. Fontículo anterior", itens: [] },
-      { nome: "16. Fontículo posterior", itens: [] },
-      { nome: "17. Fontículo ântero-lateral", itens: [] },
-      { nome: "18. Fontículo póstero-lateral", itens: [] },
-      { nome: "19. Sutura sagital", itens: [] },
-      { nome: "20. Sutura coronal", itens: [] },
-      { nome: "21. Sutura lambdoidea", itens: [] },
-      { nome: "22. Sutura occipitomastóidea", itens: [] },
-      { nome: "23. Sutura parietomastóidea", itens: [] },
-      { nome: "24. Sutura escamosa", itens: [] },
-      { nome: "25. Sutura esfenoparietal", itens: [] },
-      { nome: "26. Fissura petrotimpânica", itens: [] },
-      { nome: "27. Sutura frontonasal", itens: [] },
-      { nome: "28. Sutura internasal", itens: [] },
-      { nome: "29. Sutura nasomaxilar", itens: [] },
-      { nome: "30. Sutura intermaxilar", itens: [] },
-      { nome: "31. Sutura zigomaticamaxilar", itens: [] },
-      { nome: "32. Sutura palatina mediana", itens: [] },
-      { nome: "33. Sutura palatina transversa", itens: [] },
-      { nome: "34. Ossos suturais", itens: [] },
-      { nome: "35. Calvária", itens: ["a. Sulcos arteriovenosos","b. Impressões dos giros","c. Fovéolas granulares"] },
-      { nome: "36. Base externa do crânio", itens: [] },
-      { nome: "37. Base interna do crânio", itens: ["a. Fossa anterior do crânio","b. Fossa média do crânio","c. Fossa posterior do crânio","d. Fossa cerebelar"] },
-      { nome: "38. Ossículos da audição", itens: ["a. Martelo","b. Bigorna","c. Estribo"] }
+      {
+        nome: "8. Vômer",
+        imageId: "Vomer",
+        termos: [
+          "a. Crista coanal do vômer"
+        ]
+      },
+      {
+        nome: "9. Palatino",
+        imageId: "Palatino",
+        termos: [
+          "a. Lâmina perpendicular",
+          "b. Lâmina horizontal",
+          "c. Forame palatino maior",
+          "d. Forames palatinos menores",
+          "e. Espinha nasal posterior",
+          "f. Processo orbital"
+        ]
+      },
+      {
+        nome: "10. Maxila",
+        imageId: "Maxila",
+        termos: [
+          "a. Corpo da maxila",
+          "b. Seio maxilar",
+          "c. Face orbital",
+          "i. Sulco infra-orbital",
+          "ii. Canal infra-orbital",
+          "d. Margem infra-orbital",
+          "e. Forame infra-orbital",
+          "f. Fossa canina",
+          "g. Espinha nasal anterior",
+          "h. Túber da maxila",
+          "i. Processo frontal",
+          "j. Processo zigomático",
+          "k. Processo alveolar",
+          "i. Alvéolos dentais",
+          "ii. Septo interalveolar",
+          "iii. Septo interadicular",
+          "iv. Forame incisivo",
+          "l. Processo palatino",
+          "i. Toro palatino",
+          "m. Abertura piriforme"
+        ]
+      },
+      {
+        nome: "11. Nasal",
+        imageId: "Nasal",
+        termos: []
+      },
+      {
+        nome: "12. Lacrimal",
+        imageId: "Lacrimal",
+        termos: [
+          "a. Sulco lacrimal"
+        ]
+      },
+      {
+        nome: "13. Concha nasal inferior",
+        imageId: "ConchaNasalInferior",
+        termos: []
+      },
+      {
+        nome: "14. Zigomático",
+        imageId: "Zigomatico",
+        termos: [
+          "a. Processo frontal",
+          "b. Processo temporal",
+          "c. Forame zigomaticofrontal"
+        ]
+      },
+      {
+        nome: "15. Fontículo anterior",
+        imageId: "FonticuloAnterior",
+        termos: []
+      },
+      {
+        nome: "16. Fontículo posterior",
+        imageId: "FonticuloPosterior",
+        termos: []
+      },
+      {
+        nome: "17. Fontículo ântero-lateral",
+        imageId: "FonticuloAnteroLateral",
+        termos: []
+      },
+      {
+        nome: "18. Fontículo póstero-lateral",
+        imageId: "FonticuloPosteroLateral",
+        termos: []
+      },
+      {
+        nome: "19. Sutura sagital",
+        imageId: "SuturaSagital",
+        termos: []
+      },
+      {
+        nome: "20. Sutura coronal",
+        imageId: "SuturaCoronal",
+        termos: []
+      },
+      {
+        nome: "21. Sutura lambdoidea",
+        imageId: "SuturaLambdoidea",
+        termos: []
+      },
+      {
+        nome: "22. Sutura occipitomastóidea",
+        imageId: "SuturaOccipitomastoidea",
+        termos: []
+      },
+      {
+        nome: "23. Sutura parietomastóidea",
+        imageId: "SuturaParietomastoidea",
+        termos: []
+      },
+      {
+        nome: "24. Sutura escamosa",
+        imageId: "SuturaEscamosa",
+        termos: []
+      },
+      {
+        nome: "25. Sutura esfenoparietal",
+        imageId: "SuturaEsfenoparietal",
+        termos: []
+      },
+      {
+        nome: "26. Fissura petrotimpânica",
+        imageId: "FissuraPetrotimpanica",
+        termos: []
+      },
+      {
+        nome: "27. Sutura frontonasal",
+        imageId: "SuturaFrontonasal",
+        termos: []
+      },
+      {
+        nome: "28. Sutura internasal",
+        imageId: "SuturaInternasal",
+        termos: []
+      },
+      {
+        nome: "29. Sutura nasomaxilar",
+        imageId: "SuturaNasomaxilar",
+        termos: []
+      },
+      {
+        nome: "30. Sutura intermaxilar",
+        imageId: "SuturaIntermaxilar",
+        termos: []
+      },
+      {
+        nome: "31. Sutura zigomaticamaxilar",
+        imageId: "SuturaZigomaticamaxilar",
+        termos: []
+      },
+      {
+        nome: "32. Sutura palatina mediana",
+        imageId: "SuturaPalatinaMediana",
+        termos: []
+      },
+      {
+        nome: "33. Sutura palatina transversa",
+        imageId: "SuturaPalatinaTransversa",
+        termos: []
+      },
+      {
+        nome: "34. Ossos suturais",
+        imageId: "OssosSuturais",
+        termos: []
+      },
+      {
+        nome: "35. Calvária",
+        imageId: "Calvaria",
+        termos: [
+          "a. Sulcos arteriovenosos",
+          "b. Impressões dos giros",
+          "c. Fovéolas granulares"
+        ]
+      },
+      {
+        nome: "36. Base externa do crânio",
+        imageId: "BaseExternaDoCranio",
+        termos: []
+      },
+      {
+        nome: "37. Base interna do crânio",
+        imageId: "BaseInternaDoCranio",
+        termos: [
+          "a. Fossa anterior do crânio",
+          "b. Fossa média do crânio",
+          "c. Fossa posterior do crânio",
+          "d. Fossa cerebelar"
+        ]
+      },
+      {
+        nome: "38. Ossículos da audição",
+        imageId: "OssiculosDaAudicao",
+        termos: [
+          "a. Martelo",
+          "b. Bigorna",
+          "c. Estribo"
+        ]
+      }
     ];
 
     const tableBody = document.getElementById('ossosTable');
@@ -534,13 +756,14 @@
     const addRowBtn = document.getElementById('addRowBtn');
     const resetRowsBtn = document.getElementById('resetRowsBtn');
     const saveMsg = document.getElementById('saveMsg');
+    const bonesRoot = document.getElementById('bonesRoot');
 
     const images = JSON.parse(localStorage.getItem('roteiro-images') || '{}');
 
     function showSaved(){
       saveMsg.style.display = 'block';
       clearTimeout(window._saveMsgTimer);
-      window._saveMsgTimer = setTimeout(() => saveMsg.style.display = 'none', 1400);
+      window._saveMsgTimer = setTimeout(() => saveMsg.style.display = 'none', 1600);
     }
 
     function addEmptyRow(){
@@ -559,39 +782,38 @@
       for(let i=0;i<12;i++) addEmptyRow();
     }
 
-    function renderRoteiro(){
-      const root = document.getElementById('roteiro-root');
-      const ul = document.createElement('ul');
-      ul.className = 'tree-list';
-
-      roteiroData.forEach(bloco => {
-        const li = document.createElement('li');
-        li.className = 'tree-item';
-
-        const principal = document.createElement('span');
-        principal.className = 'tree-label';
-        principal.textContent = bloco.nome;
-        li.appendChild(principal);
-
-        if(bloco.itens && bloco.itens.length){
-          const sub = document.createElement('ul');
-          sub.className = 'tree-list';
-          bloco.itens.forEach(item => {
-            const subLi = document.createElement('li');
-            subLi.className = 'tree-item';
-            const subLabel = document.createElement('span');
-            subLabel.className = 'tree-label';
-            subLabel.textContent = item;
-            subLi.appendChild(subLabel);
-            sub.appendChild(subLi);
-          });
-          li.appendChild(sub);
-        }
-
-        ul.appendChild(li);
+    function saveTable(){
+      const rows = [];
+      tableBody.querySelectorAll('tr').forEach(tr => {
+        const cells = Array.from(tr.querySelectorAll('td')).map(td => td.textContent);
+        rows.push(cells);
       });
+      localStorage.setItem('table-ossos', JSON.stringify(rows));
+    }
 
-      root.appendChild(ul);
+    function loadTable(){
+      const saved = JSON.parse(localStorage.getItem('table-ossos') || 'null');
+      if(saved && Array.isArray(saved) && saved.length){
+        tableBody.innerHTML = '';
+        saved.forEach(row => {
+          const tr = document.createElement('tr');
+          row.forEach(text => {
+            const td = document.createElement('td');
+            td.contentEditable = 'true';
+            td.spellcheck = false;
+            td.textContent = text || '';
+            tr.appendChild(td);
+          });
+          tableBody.appendChild(tr);
+        });
+      } else {
+        resetRows();
+      }
+
+      tableBody.addEventListener('input', () => {
+        saveTable();
+        showSaved();
+      });
     }
 
     function loadNotes(){
@@ -611,20 +833,26 @@
 
     function renderGallery(sectionId){
       const gallery = document.getElementById('gallery-' + sectionId);
+      if(!gallery) return;
       gallery.innerHTML = '';
+
       (images[sectionId] || []).forEach((src, index) => {
         const box = document.createElement('div');
         box.className = 'thumb';
 
         const img = document.createElement('img');
         img.src = src;
+        img.alt = 'Imagem';
 
         const del = document.createElement('button');
+        del.type = 'button';
         del.textContent = '×';
+        del.title = 'Remover imagem';
         del.onclick = () => {
           images[sectionId].splice(index, 1);
           saveImages();
           renderGallery(sectionId);
+          showSaved();
         };
 
         box.appendChild(img);
@@ -653,11 +881,69 @@
                 saveImages();
                 renderGallery(sectionId);
                 input.value = '';
+                showSaved();
               }
             };
             reader.readAsDataURL(file);
           });
         });
+      });
+    }
+
+    function renderBones(){
+      bonesRoot.innerHTML = '';
+
+      bonesData.forEach(bone => {
+        const card = document.createElement('div');
+        card.className = 'bone-card';
+
+        const head = document.createElement('div');
+        head.className = 'bone-head';
+
+        const title = document.createElement('h4');
+        title.className = 'bone-title';
+        title.textContent = bone.nome;
+
+        const uploadRow = document.createElement('div');
+        uploadRow.className = 'upload-row';
+        uploadRow.innerHTML = `
+          <label class="btn-upload">
+            <input type="file" accept="image/*" capture="environment" multiple data-image-id="bone-${bone.imageId}">
+            Tirar foto ou inserir imagens de ${bone.nome}
+          </label>
+        `;
+
+        head.appendChild(title);
+        head.appendChild(uploadRow);
+
+        const content = document.createElement('div');
+        content.className = 'bone-content';
+
+        const left = document.createElement('div');
+        if (bone.termos.length) {
+          const ul = document.createElement('ul');
+          ul.className = 'bone-list';
+          bone.termos.forEach(term => {
+            const li = document.createElement('li');
+            li.textContent = term;
+            ul.appendChild(li);
+          });
+          left.appendChild(ul);
+        } else {
+          const p = document.createElement('p');
+          p.textContent = bone.nome;
+          left.appendChild(p);
+        }
+
+        const right = document.createElement('div');
+        right.innerHTML = `<div class="gallery" id="gallery-bone-${bone.imageId}"></div>`;
+
+        content.appendChild(left);
+        content.appendChild(right);
+
+        card.appendChild(head);
+        card.appendChild(content);
+        bonesRoot.appendChild(card);
       });
     }
 
@@ -668,11 +954,19 @@
     });
 
     pdfBtn.addEventListener('click', () => window.print());
-    addRowBtn.addEventListener('click', addEmptyRow);
-    resetRowsBtn.addEventListener('click', resetRows);
+    addRowBtn.addEventListener('click', () => {
+      addEmptyRow();
+      saveTable();
+      showSaved();
+    });
+    resetRowsBtn.addEventListener('click', () => {
+      resetRows();
+      saveTable();
+      showSaved();
+    });
 
-    resetRows();
-    renderRoteiro();
+    renderBones();
+    loadTable();
     loadNotes();
     setupImageInputs();
   </script>

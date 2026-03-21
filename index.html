@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Roteiro Prático de Anatomia</title>
+  <title>Roteiro prático - Anatomia Humana</title>
 
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#0b1020">
@@ -48,6 +48,7 @@
 
     h1{margin:0 0 6px 0;font-size:2rem}
     .sub{margin:0;color:var(--muted)}
+    .sub + .sub{margin-top:4px}
 
     .actions{
       display:flex;
@@ -67,6 +68,14 @@
     .btn-pdf{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
     .btn-add{background:#18334a;color:#fff;border:1px solid #27577d}
     .btn-reset{background:#2a2233;color:#fff;border:1px solid #57406c}
+    .btn-zoom{
+      background:#1f4d7a;
+      color:#fff;
+      border:1px solid #4d83b9;
+      padding:8px 12px;
+      border-radius:10px;
+      font-size:.85rem;
+    }
 
     .card{
       background:var(--card);
@@ -155,6 +164,7 @@
       align-items:center;
       justify-content:center;
       padding:10px;
+      flex-direction:column;
     }
 
     .portrait-gallery .thumb img{
@@ -165,7 +175,7 @@
       background:#0a1020;
     }
 
-    .thumb button{
+    .thumb button.remove-btn{
       position:absolute;
       right:8px;
       top:8px;
@@ -179,6 +189,14 @@
       font-size:18px;
       line-height:1;
       z-index:2;
+    }
+
+    .thumb-actions{
+      width:100%;
+      display:flex;
+      justify-content:flex-end;
+      gap:8px;
+      padding-top:10px;
     }
 
     .table-wrap{overflow:auto;margin-top:12px}
@@ -267,6 +285,62 @@
       display:none;
     }
 
+    footer{
+      text-align:center;
+      color:#9fb0ca;
+      font-size:.68rem;
+      padding:18px 10px 28px;
+      line-height:1.4;
+    }
+
+    .lightbox{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.9);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      z-index:9999;
+    }
+
+    .lightbox.active{
+      display:flex;
+    }
+
+    .lightbox-content{
+      position:relative;
+      max-width:95vw;
+      max-height:95vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .lightbox img{
+      max-width:95vw;
+      max-height:90vh;
+      object-fit:contain;
+      border-radius:14px;
+      background:#111827;
+      display:block;
+    }
+
+    .lightbox-close{
+      position:absolute;
+      top:-10px;
+      right:-10px;
+      width:40px;
+      height:40px;
+      border-radius:999px;
+      border:none;
+      background:#fff;
+      color:#000;
+      font-size:22px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
     @media (max-width: 980px){
       .bone-content{
         grid-template-columns:1fr;
@@ -287,11 +361,12 @@
 
     @media print{
       body{background:#fff;color:#000}
-      .actions,.upload-row,.thumb button,.btn-add,.btn-reset,.ok,.small-help{display:none !important}
+      .actions,.upload-row,.thumb button,.thumb-actions,.btn-add,.btn-reset,.ok,.small-help,.lightbox{display:none !important}
       .card,.term-box,.bone-card{background:#fff;color:#000;border:1px solid #bbb;box-shadow:none}
       textarea{background:#fff;color:#000;border:1px solid #bbb}
       th,td{border:1px solid #bbb;color:#000}
       th{background:#eee}
+      footer{color:#444}
     }
   </style>
 </head>
@@ -299,7 +374,10 @@
   <div class="wrap">
     <div class="top">
       <div>
-        <h1>Roteiro Prático de Anatomia</h1>
+        <h1>Roteiro prático - Anatomia Humana</h1>
+        <p class="sub">Profª Drª. Carmem Patrícia Barbosa</p>
+        <p class="sub">ANATOMIA HUMANA</p>
+        <p class="sub">OSTEOLOGIA</p>
         <p class="sub">GENERALIDADES e ESQUELETO AXIAL</p>
       </div>
       <div class="actions">
@@ -431,6 +509,17 @@
       <div class="gallery" id="gallery-sec-geral"></div>
       <div class="ok" id="saveMsg">Anotações e imagens salvas no navegador.</div>
     </section>
+
+    <footer>
+      Cláudia Pinheiro responsável tecnológico
+    </footer>
+  </div>
+
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <div class="lightbox-content">
+      <button id="lightboxClose" class="lightbox-close" type="button">×</button>
+      <img id="lightboxImg" alt="Imagem ampliada">
+    </div>
   </div>
 
   <script>
@@ -742,124 +831,105 @@
         ]
       },
       {
-        titulo: "VÉRTEBRAS — Generalidades",
+        titulo: "VÉRTEBRAS",
         itens: [
-          { nome: "1. Corpo vertebral", imageId: "CorpoVertebral", termos: [] },
           {
-            nome: "2. Arco vertebral",
-            imageId: "ArcoVertebral",
+            nome: "Generalidades",
+            imageId: "GeneralidadesVertebras",
             termos: [
+              "1. Corpo vertebral",
+              "2. Arco vertebral",
               "a. Pedículo do arco vertebral",
-              "b. Lâmina do arco vertebral"
-            ]
-          },
-          { nome: "3. Forame vertebral", imageId: "ForameVertebral", termos: [] },
-          { nome: "4. Canal vertebral", imageId: "CanalVertebral", termos: [] },
-          { nome: "5. Processo espinhoso", imageId: "ProcessoEspinhoso", termos: [] },
-          { nome: "6. Processo transverso", imageId: "ProcessoTransverso", termos: [] },
-          { nome: "7. Processo articular superior", imageId: "ProcessoArticularSuperior", termos: [] },
-          { nome: "8. Processo articular inferior", imageId: "ProcessoArticularInferior", termos: [] },
-          { nome: "9. Incisura vertebral superior", imageId: "IncisuraVertebralSuperior", termos: [] },
-          { nome: "10. Incisura vertebral inferior", imageId: "IncisuraVertebralInferior", termos: [] },
-          { nome: "11. Forame intervertebral", imageId: "ForameIntervertebral", termos: [] },
-          { nome: "12. Forame transversário (nas vértebras cervicais)", imageId: "ForameTransversarioCervicais", termos: [] },
-          {
-            nome: "13. Curvaturas primárias",
-            imageId: "CurvaturasPrimarias",
-            termos: [
+              "b. Lâmina do arco vertebral",
+              "3. Forame vertebral",
+              "4. Canal vertebral",
+              "5. Processo espinhoso",
+              "6. Processo transverso",
+              "7. Processo articular superior",
+              "8. Processo articular inferior",
+              "9. Incisura vertebral superior",
+              "10. Incisura vertebral inferior",
+              "11. Forame intervertebral",
+              "12. Forame transversário (nas vértebras cervicais)",
+              "13. Curvaturas primárias",
               "a. Cifose torácica",
-              "b. Cifose sacral"
-            ]
-          },
-          {
-            nome: "14. Curvaturas secundárias",
-            imageId: "CurvaturasSecundarias",
-            termos: [
+              "b. Cifose sacral",
+              "14. Curvaturas secundárias",
               "a. Lordose cervical",
-              "b. Lordose lombar"
-            ]
-          },
-          { nome: "15. Escoliose", imageId: "Escoliose", termos: [] },
-          { nome: "16. Hipercifose", imageId: "Hipercifose", termos: [] },
-          { nome: "17. Hiperlordose", imageId: "Hiperlordose", termos: [] },
-          { nome: "18. Disco intervertebral", imageId: "DiscoIntervertebral", termos: [] }
-        ]
-      },
-      {
-        titulo: "Vértebras cervicais — CI (Atlas)",
-        itens: [
-          {
-            nome: "19. Massa lateral do atlas",
-            imageId: "MassaLateralDoAtlas",
-            termos: [
-              "a. Face articular superior",
-              "b. Face articular inferior"
-            ]
-          },
-          {
-            nome: "20. Arco anterior do atlas",
-            imageId: "ArcoAnteriorDoAtlas",
-            termos: [
-              "a. Tubérculo anterior",
-              "b. Fóvea do dente"
-            ]
-          },
-          {
-            nome: "21. Arco posterior do atlas",
-            imageId: "ArcoPosteriorDoAtlas",
-            termos: [
-              "a. Tubérculo posterior",
-              "b. Sulco da artéria vertebral"
-            ]
-          },
-          { nome: "22. Forame transversário", imageId: "ForameTransversarioAtlas", termos: [] }
-        ]
-      },
-      {
-        titulo: "Vértebras cervicais — CII (Áxis)",
-        itens: [
-          {
-            nome: "23. Dente do áxis",
-            imageId: "DenteDoAxis",
-            termos: [
-              "a. Ápice do dente do áxis",
-              "b. Face articular anterior",
-              "c. Face articular posterior"
-            ]
-          },
-          { nome: "24. Forame transversário", imageId: "ForameTransversarioAxis", terms: [] },
-          {
-            nome: "25. Processo transverso",
-            imageId: "ProcessoTransversoAxis",
-            termos: [
-              "a. Tubérculo anterior",
-              "b. Tubérculo posterior"
+              "b. Lordose lombar",
+              "15. Escoliose",
+              "16. Hipercifose",
+              "17. Hiperlordose",
+              "18. Disco intervertebral"
             ]
           }
         ]
       },
       {
-        titulo: "Vértebras CIII a CVI — Vértebras cervicais típicas",
+        titulo: "Vértebras cervicais",
         itens: [
-          { nome: "26. Unco do corpo", imageId: "UncoDoCorpo", termos: [] },
-          { nome: "27. Forame transversário", imageId: "ForameTransversarioCIIIaCVI", termos: [] },
-          { nome: "28. Tubérculo anterior", imageId: "TuberculoAnteriorCIIIaCVI", termos: [] },
-          { nome: "29. Tubérculo posterior", imageId: "TuberculoPosteriorCIIIaCVI", termos: [] },
-          { nome: "30. Sulco do nervo espinal", imageId: "SulcoDoNervoEspinal", termos: [] }
-        ]
-      },
-      {
-        titulo: "Vértebra CVII — Vértebra proeminente",
-        itens: [
-          { nome: "31. Forame transversário", imageId: "ForameTransversarioCVII", termos: [] }
+          {
+            nome: "CI (Atlas)",
+            imageId: "Atlas",
+            termos: [
+              "19. Massa lateral do atlas",
+              "a. Face articular superior",
+              "b. Face articular inferior",
+              "20. Arco anterior do atlas",
+              "a. Tubérculo anterior",
+              "b. Fóvea do dente",
+              "21. Arco posterior do atlas",
+              "a. Tubérculo posterior",
+              "b. Sulco da artéria vertebral",
+              "22. Forame transversário"
+            ]
+          },
+          {
+            nome: "CII (Áxis)",
+            imageId: "Axis",
+            termos: [
+              "23. Dente do áxis",
+              "a. Ápice do dente do áxis",
+              "b. Face articular anterior",
+              "c. Face articular posterior",
+              "24. Forame transversário",
+              "25. Processo transverso",
+              "a. Tubérculo anterior",
+              "b. Tubérculo posterior"
+            ]
+          },
+          {
+            nome: "Vértebras CIII a CVI – Vértebras cervicais típicas",
+            imageId: "CIIIaCVI",
+            termos: [
+              "26. Unco do corpo",
+              "27. Forame transversário",
+              "28. Tubérculo anterior",
+              "29. Tubérculo posterior",
+              "30. Sulco do nervo espinal"
+            ]
+          },
+          {
+            nome: "Vértebra CVII – Vértebra proeminente",
+            imageId: "CVII",
+            termos: [
+              "31. Forame transversário"
+            ]
+          }
         ]
       },
       {
         titulo: "Vértebras torácicas (TI a TXII)",
         itens: [
-          { nome: "32. Fóvea costal superior", imageId: "FoveaCostalSuperior", termos: [] },
-          { nome: "33. Fóvea costal inferior", imageId: "FoveaCostalInferior", termos: [] },
-          { nome: "34. Fóvea costal do processo transverso", imageId: "FoveaCostalDoProcessoTransverso", termos: [] }
+          {
+            nome: "Vértebras torácicas",
+            imageId: "VertebrasToracicas",
+            termos: [
+              "32. Fóvea costal superior",
+              "33. Fóvea costal inferior",
+              "34. Fóvea costal do processo transverso"
+            ]
+          }
         ]
       },
       {
@@ -869,46 +939,27 @@
       {
         titulo: "Vértebras sacrais (SI a SV; Sacro)",
         itens: [
-          { nome: "35. Ápice do sacro", imageId: "ApiceDoSacro", termos: [] },
           {
-            nome: "36. Base do sacro",
-            imageId: "BaseDoSacro",
+            nome: "Sacro",
+            imageId: "Sacro",
             termos: [
+              "35. Ápice do sacro",
+              "36. Base do sacro",
               "a. Promontório",
               "b. Asa do sacro",
-              "c. Processo articular superior"
-            ]
-          },
-          {
-            nome: "37. Parte lateral",
-            imageId: "ParteLateralDoSacro",
-            termos: [
-              "a. Face auricular"
-            ]
-          },
-          {
-            nome: "38. Face pélvica",
-            imageId: "FacePelvica",
-            termos: [
+              "c. Processo articular superior",
+              "37. Parte lateral",
+              "a. Face auricular",
+              "38. Face pélvica",
               "a. Linhas transversas",
-              "b. Forames sacrais anteriores"
-            ]
-          },
-          {
-            nome: "39. Face dorsal",
-            imageId: "FaceDorsal",
-            termos: [
+              "b. Forames sacrais anteriores",
+              "39. Face dorsal",
               "a. Forames sacrais posteriores",
               "b. Crista sacral mediana",
               "c. Crista sacral medial",
-              "d. Crista sacral lateral"
-            ]
-          },
-          { nome: "40. Corno sacral", imageId: "CornoSacral", termos: [] },
-          {
-            nome: "41. Canal sacral",
-            imageId: "CanalSacral",
-            termos: [
+              "d. Crista sacral lateral",
+              "40. Corno sacral",
+              "41. Canal sacral",
               "a. Hiato sacral"
             ]
           }
@@ -917,48 +968,40 @@
       {
         titulo: "Vértebras coccígeas (Co I a Co IV; Cóccix)",
         itens: [
-          { nome: "42. Corno coccígeo", imageId: "CornoCoccigeo", termos: [] }
+          {
+            nome: "Cóccix",
+            imageId: "Coccix",
+            termos: [
+              "42. Corno coccígeo"
+            ]
+          }
         ]
       },
       {
         titulo: "COSTELAS",
         itens: [
-          { nome: "43. Costelas verdadeiras (1° ao 7° par)", imageId: "CostelasVerdadeiras", termos: [] },
-          { nome: "44. Costelas falsas (8° ao 10° par)", imageId: "CostelasFalsas", termos: [] },
-          { nome: "45. Costelas flutuantes (11° e 12° par)", imageId: "CostelasFlutuantes", termos: [] },
-          { nome: "46. Cartilagem costal", imageId: "CartilagemCostal", termos: [] },
-          { nome: "47. Margem costal", imageId: "MargemCostal", termos: [] },
           {
-            nome: "48. Cabeça da costela",
-            imageId: "CabecaDaCostela",
+            nome: "Costelas",
+            imageId: "Costelas",
             termos: [
+              "43. Costelas verdadeiras (1° ao 7° par)",
+              "44. Costelas falsas (8° ao 10° par)",
+              "45. Costelas flutuantes (11° e 12° par)",
+              "46. Cartilagem costal",
+              "47. Margem costal",
+              "48. Cabeça da costela",
               "a. Face articular superior da cabeça da costela",
-              "b. Face articular inferior da cabeça da costela"
-            ]
-          },
-          { nome: "49. Colo da costela", imageId: "ColoDaCostela", termos: [] },
-          { nome: "50. Tubérculo da costela", imageId: "TuberculoDaCostela", termos: [] },
-          { nome: "51. Ângulo da costela", imageId: "AnguloDaCostela", termos: [] },
-          {
-            nome: "52. Corpo da costela",
-            imageId: "CorpoDaCostela",
-            termos: [
-              "a. Sulco da costela"
-            ]
-          },
-          {
-            nome: "53. Costela I",
-            imageId: "CostelaI",
-            termos: [
+              "b. Face articular inferior da cabeça da costela",
+              "49. Colo da costela",
+              "50. Tubérculo da costela",
+              "51. Ângulo da costela",
+              "52. Corpo da costela",
+              "a. Sulco da costela",
+              "53. Costela I",
               "a. Sulco da artéria subclávia",
               "b. Tubérculo do músculo escaleno anterior",
-              "c. Sulco da veia subclávia"
-            ]
-          },
-          {
-            nome: "54. Costela II",
-            imageId: "CostelaII",
-            termos: [
+              "c. Sulco da veia subclávia",
+              "54. Costela II",
               "a. Tuberosidade do músculo serrátil anterior"
             ]
           }
@@ -973,6 +1016,9 @@
     const resetRowsBtn = document.getElementById('resetRowsBtn');
     const saveMsg = document.getElementById('saveMsg');
     const sectionsRoot = document.getElementById('sectionsRoot');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
 
     const images = JSON.parse(localStorage.getItem('roteiro-images') || '{}');
 
@@ -1047,6 +1093,26 @@
       localStorage.setItem('roteiro-images', JSON.stringify(images));
     }
 
+    function openLightbox(src){
+      lightboxImg.src = src;
+      lightbox.classList.add('active');
+      lightbox.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeLightbox(){
+      lightbox.classList.remove('active');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImg.src = '';
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
     function renderGallery(sectionId){
       const gallery = document.getElementById('gallery-' + sectionId);
       if(!gallery) return;
@@ -1071,6 +1137,7 @@
         del.type = 'button';
         del.textContent = '×';
         del.title = 'Remover imagem';
+        del.className = 'remove-btn';
         del.onclick = () => {
           images[sectionId].splice(index, 1);
           saveImages();
@@ -1078,8 +1145,19 @@
           showSaved();
         };
 
-        box.appendChild(img);
+        const actions = document.createElement('div');
+        actions.className = 'thumb-actions';
+
+        const zoomBtn = document.createElement('button');
+        zoomBtn.type = 'button';
+        zoomBtn.className = 'btn-zoom';
+        zoomBtn.textContent = 'Ampliar foto';
+        zoomBtn.onclick = () => openLightbox(src);
+
+        actions.appendChild(zoomBtn);
         box.appendChild(del);
+        box.appendChild(img);
+        box.appendChild(actions);
         gallery.appendChild(box);
       });
     }
@@ -1214,5 +1292,14 @@
     loadNotes();
     setupImageInputs();
   </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+          .catch(error => console.error('Erro ao registrar service worker:', error));
+      });
+    }
+  </script>
 </body>
-</html>
+  </html>

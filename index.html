@@ -15,6 +15,8 @@
       --accent:#66b3ff;
       --accent2:#8b7bff;
       --ok:#2dd4bf;
+      --prof:#6d28d9;
+      --danger:#dc2626;
     }
 
     *{box-sizing:border-box}
@@ -61,6 +63,7 @@
 
     .btn-note{background:#22304f;color:#fff;border:1px solid #3c5488}
     .btn-pdf{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+    .btn-prof{background:linear-gradient(135deg,#5b21b6,#7c3aed);color:#fff;border:1px solid #8b5cf6}
     .btn-add{background:#18334a;color:#fff;border:1px solid #27577d}
     .btn-reset{background:#2a2233;color:#fff;border:1px solid #57406c}
     .btn-zoom{
@@ -70,6 +73,16 @@
       padding:8px 12px;
       border-radius:10px;
       font-size:.85rem;
+    }
+    .btn-danger{
+      background:var(--danger);
+      color:#fff;
+      border:1px solid #ef4444;
+    }
+    .btn-ok{
+      background:#0f766e;
+      color:#fff;
+      border:1px solid #2dd4bf;
     }
 
     .card{
@@ -365,6 +378,65 @@
       cursor:pointer;
     }
 
+    .modal-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.68);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:10000;
+      padding:20px;
+    }
+
+    .modal-overlay.active{
+      display:flex;
+    }
+
+    .modal{
+      width:min(480px,100%);
+      background:#131c34;
+      border:1px solid #334a80;
+      border-radius:18px;
+      padding:18px;
+      box-shadow:0 18px 40px rgba(0,0,0,.45);
+    }
+
+    .modal h3{
+      margin:0 0 8px 0;
+    }
+
+    .modal p{
+      color:var(--muted);
+      margin:0 0 14px 0;
+      line-height:1.45;
+    }
+
+    .modal input{
+      width:100%;
+      background:#0c1428;
+      color:#fff;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+      font-size:1rem;
+      margin-bottom:12px;
+    }
+
+    .modal-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .modal-msg{
+      min-height:20px;
+      margin-top:10px;
+      color:#fca5a5;
+      font-size:.92rem;
+    }
+
     @media (max-width: 980px){
       .bone-content{grid-template-columns:1fr}
       .portrait-gallery{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
@@ -374,7 +446,7 @@
 
     @media print{
       body{background:#fff;color:#000}
-      .actions,.upload-row,.upload-actions,.thumb button,.thumb-actions,.btn-add,.btn-reset,.ok,.small-help,.lightbox{display:none !important}
+      .actions,.upload-row,.upload-actions,.thumb button,.thumb-actions,.btn-add,.btn-reset,.ok,.small-help,.lightbox,.modal-overlay{display:none !important}
       .card,.term-box,.bone-card{background:#fff;color:#000;border:1px solid #bbb;box-shadow:none}
       textarea{background:#fff;color:#000;border:1px solid #bbb}
       th,td{border:1px solid #bbb;color:#000}
@@ -397,6 +469,7 @@
       <div class="actions">
         <button id="noteBtn" class="btn-note" type="button">Tomar nota</button>
         <button id="pdfBtn" class="btn-pdf" type="button">Salvar em PDF</button>
+        <button id="profBtn" class="btn-prof" type="button">Modo professor</button>
       </div>
     </div>
 
@@ -568,7 +641,63 @@
     </div>
   </div>
 
+  <div class="modal-overlay" id="profModal" aria-hidden="true">
+    <div class="modal">
+      <h3>Modo professor</h3>
+      <p>Digite a senha para preencher a tabela da questão 2 automaticamente.</p>
+      <input id="profPassword" type="password" placeholder="Digite a senha" />
+      <div class="modal-actions">
+        <button id="closeProfModalBtn" class="btn-reset" type="button">Cancelar</button>
+        <button id="clearTableBtn" class="btn-danger" type="button">Limpar tabela</button>
+        <button id="fillTableBtn" class="btn-ok" type="button">Preencher tabela</button>
+      </div>
+      <div class="modal-msg" id="profMsg"></div>
+    </div>
+  </div>
+
   <script>
+    const PROFESSOR_PASSWORD = "prof2025";
+
+    const GABARITO_TABELA = [
+      ["Frontal","Axial","Plano"],
+      ["Parietal","Axial","Plano"],
+      ["Occipital","Axial","Plano"],
+      ["Temporal","Axial","Irregular"],
+      ["Esfenoide","Axial","Irregular"],
+      ["Etmoide","Axial","Irregular"],
+      ["Nasal","Axial","Plano"],
+      ["Maxila","Axial","Irregular"],
+      ["Mandíbula","Axial","Irregular"],
+      ["Vômer","Axial","Plano"],
+      ["Zigomático","Axial","Irregular"],
+      ["Lacrimal","Axial","Plano"],
+      ["Palatino","Axial","Irregular"],
+      ["Concha nasal inferior","Axial","Irregular"],
+      ["Hioide","Axial","Irregular"],
+      ["Esterno","Axial","Plano"],
+      ["Costelas","Axial","Plano"],
+      ["Vértebras cervicais","Axial","Irregular"],
+      ["Vértebras torácicas","Axial","Irregular"],
+      ["Vértebras lombares","Axial","Irregular"],
+      ["Sacro","Axial","Irregular"],
+      ["Cóccix","Axial","Irregular"],
+      ["Clavícula","Apendicular","Longo"],
+      ["Escápula","Apendicular","Plano"],
+      ["Úmero","Apendicular","Longo"],
+      ["Rádio","Apendicular","Longo"],
+      ["Ulna","Apendicular","Longo"],
+      ["Carpos","Apendicular","Curto"],
+      ["Metacarpos","Apendicular","Longo"],
+      ["Falanges da mão","Apendicular","Longo"],
+      ["Fêmur","Apendicular","Longo"],
+      ["Patela","Apendicular","Sesamoide"],
+      ["Tíbia","Apendicular","Longo"],
+      ["Fíbula","Apendicular","Longo"],
+      ["Tarsos","Apendicular","Curto"],
+      ["Metatarsos","Apendicular","Longo"],
+      ["Falanges do pé","Apendicular","Longo"]
+    ];
+
     const sectionsData = [
       {
         titulo: "CRÂNIO",
@@ -846,6 +975,7 @@
     const tableBody = document.getElementById('ossosTable');
     const noteBtn = document.getElementById('noteBtn');
     const pdfBtn = document.getElementById('pdfBtn');
+    const profBtn = document.getElementById('profBtn');
     const addRowBtn = document.getElementById('addRowBtn');
     const resetRowsBtn = document.getElementById('resetRowsBtn');
     const saveMsg = document.getElementById('saveMsg');
@@ -853,6 +983,13 @@
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
     const lightboxClose = document.getElementById('lightboxClose');
+
+    const profModal = document.getElementById('profModal');
+    const profPassword = document.getElementById('profPassword');
+    const closeProfModalBtn = document.getElementById('closeProfModalBtn');
+    const clearTableBtn = document.getElementById('clearTableBtn');
+    const fillTableBtn = document.getElementById('fillTableBtn');
+    const profMsg = document.getElementById('profMsg');
 
     let db;
     const DB_NAME = 'roteiroAnatomiaDB';
@@ -916,20 +1053,21 @@
       });
     }
 
-    function addEmptyRow(){
+    function addEmptyRow(values = ['', '', '']){
       const tr = document.createElement('tr');
       for(let i = 0; i < 3; i++){
         const td = document.createElement('td');
         td.contentEditable = 'true';
         td.spellcheck = false;
+        td.textContent = values[i] || '';
         tr.appendChild(td);
       }
       tableBody.appendChild(tr);
     }
 
-    function resetRows(){
+    function resetRows(count = 12){
       tableBody.innerHTML = '';
-      for(let i = 0; i < 12; i++) addEmptyRow();
+      for(let i = 0; i < count; i++) addEmptyRow();
     }
 
     function saveTable(){
@@ -947,15 +1085,7 @@
       if(saved && Array.isArray(saved) && saved.length){
         tableBody.innerHTML = '';
         saved.forEach(row => {
-          const tr = document.createElement('tr');
-          row.forEach(text => {
-            const td = document.createElement('td');
-            td.contentEditable = 'true';
-            td.spellcheck = false;
-            td.textContent = text || '';
-            tr.appendChild(td);
-          });
-          tableBody.appendChild(tr);
+          addEmptyRow(row);
         });
       } else {
         resetRows();
@@ -996,7 +1126,10 @@
     });
 
     document.addEventListener('keydown', (e) => {
-      if(e.key === 'Escape') closeLightbox();
+      if(e.key === 'Escape') {
+        closeLightbox();
+        closeProfessorModal();
+      }
     });
 
     function renderGallery(sectionId){
@@ -1204,6 +1337,36 @@
       });
     }
 
+    function openProfessorModal(){
+      profModal.classList.add('active');
+      profModal.setAttribute('aria-hidden', 'false');
+      profPassword.value = '';
+      profMsg.textContent = '';
+      setTimeout(() => profPassword.focus(), 50);
+    }
+
+    function closeProfessorModal(){
+      profModal.classList.remove('active');
+      profModal.setAttribute('aria-hidden', 'true');
+      profPassword.value = '';
+      profMsg.textContent = '';
+    }
+
+    function preencherTabelaProfessor(){
+      tableBody.innerHTML = '';
+      GABARITO_TABELA.forEach(row => addEmptyRow(row));
+      saveTable();
+      showSaved();
+      closeProfessorModal();
+    }
+
+    function limparTabelaProfessor(){
+      resetRows();
+      saveTable();
+      showSaved();
+      closeProfessorModal();
+    }
+
     noteBtn.addEventListener('click', () => {
       document.querySelectorAll('.note-wrapper').forEach(box => {
         box.hidden = !box.hidden;
@@ -1211,6 +1374,41 @@
     });
 
     pdfBtn.addEventListener('click', () => window.print());
+
+    profBtn.addEventListener('click', openProfessorModal);
+    closeProfModalBtn.addEventListener('click', closeProfessorModal);
+
+    fillTableBtn.addEventListener('click', () => {
+      if(profPassword.value === PROFESSOR_PASSWORD){
+        preencherTabelaProfessor();
+      } else {
+        profMsg.textContent = 'Senha incorreta.';
+      }
+    });
+
+    clearTableBtn.addEventListener('click', () => {
+      if(profPassword.value === PROFESSOR_PASSWORD){
+        limparTabelaProfessor();
+      } else {
+        profMsg.textContent = 'Digite a senha correta para limpar ou preencher.';
+      }
+    });
+
+    profPassword.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter'){
+        if(profPassword.value === PROFESSOR_PASSWORD){
+          preencherTabelaProfessor();
+        } else {
+          profMsg.textContent = 'Senha incorreta.';
+        }
+      }
+    });
+
+    profModal.addEventListener('click', (e) => {
+      if(e.target === profModal){
+        closeProfessorModal();
+      }
+    });
 
     addRowBtn.addEventListener('click', () => {
       addEmptyRow();
@@ -1239,4 +1437,4 @@
     init();
   </script>
 </body>
-</html>
+  </html>

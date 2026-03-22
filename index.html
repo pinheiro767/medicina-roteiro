@@ -4,6 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Roteiro prático - Anatomia Humana</title>
+
+  <meta name="theme-color" content="#0b1020" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Roteiro Anatomia" />
+
   <style>
     :root{
       --bg:#0b1020;
@@ -17,6 +26,7 @@
       --ok:#2dd4bf;
       --prof:#6d28d9;
       --danger:#dc2626;
+      --install:#0f766e;
     }
 
     *{box-sizing:border-box}
@@ -64,6 +74,7 @@
     .btn-note{background:#22304f;color:#fff;border:1px solid #3c5488}
     .btn-pdf{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
     .btn-prof{background:linear-gradient(135deg,#5b21b6,#7c3aed);color:#fff;border:1px solid #8b5cf6}
+    .btn-install{background:linear-gradient(135deg,#0f766e,#14b8a6);color:#fff;border:1px solid #2dd4bf}
     .btn-add{background:#18334a;color:#fff;border:1px solid #27577d}
     .btn-reset{background:#2a2233;color:#fff;border:1px solid #57406c}
     .btn-zoom{
@@ -470,6 +481,7 @@
         <button id="noteBtn" class="btn-note" type="button">Tomar nota</button>
         <button id="pdfBtn" class="btn-pdf" type="button">Salvar em PDF</button>
         <button id="profBtn" class="btn-prof" type="button">Modo professor</button>
+        <button id="installBtn" class="btn-install" type="button" style="display:none;">Baixar app</button>
       </div>
     </div>
 
@@ -976,6 +988,7 @@
     const noteBtn = document.getElementById('noteBtn');
     const pdfBtn = document.getElementById('pdfBtn');
     const profBtn = document.getElementById('profBtn');
+    const installBtn = document.getElementById('installBtn');
     const addRowBtn = document.getElementById('addRowBtn');
     const resetRowsBtn = document.getElementById('resetRowsBtn');
     const saveMsg = document.getElementById('saveMsg');
@@ -991,6 +1004,7 @@
     const fillTableBtn = document.getElementById('fillTableBtn');
     const profMsg = document.getElementById('profMsg');
 
+    let deferredPrompt = null;
     let db;
     const DB_NAME = 'roteiroAnatomiaDB';
     const STORE_NAME = 'images';
@@ -1422,6 +1436,27 @@
       showSaved();
     });
 
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (installBtn) installBtn.style.display = 'inline-block';
+    });
+
+    if (installBtn) {
+      installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        installBtn.style.display = 'none';
+      });
+    }
+
+    window.addEventListener('appinstalled', () => {
+      deferredPrompt = null;
+      if (installBtn) installBtn.style.display = 'none';
+    });
+
     async function init(){
       renderSections();
       loadTable();
@@ -1434,7 +1469,14 @@
       setupImageInputs();
     }
 
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+          .catch(error => console.error('Erro ao registrar service worker:', error));
+      });
+    }
+
     init();
   </script>
 </body>
-  </html>
+</html>

@@ -4,11 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Roteiro prático - Anatomia Humana</title>
-
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#0b1020">
-  <link rel="apple-touch-icon" href="icons/icon-192.png">
-
   <style>
     :root{
       --bg:#0b1020;
@@ -56,10 +51,7 @@
       flex-wrap:wrap;
     }
 
-    button,
-    label.btn-upload,
-    label.btn-camera,
-    label.btn-file{
+    button, label.btn-upload, label.btn-camera, label.btn-file{
       border:none;
       border-radius:12px;
       padding:12px 16px;
@@ -150,10 +142,7 @@
       color:#fff;
     }
 
-    .btn-upload input,
-    .hidden-input{
-      display:none;
-    }
+    .btn-upload input, .hidden-input{display:none}
 
     .gallery{
       display:grid;
@@ -229,21 +218,29 @@
     }
 
     .table-wrap{overflow:auto;margin-top:12px}
+
     table{
       width:100%;
       min-width:700px;
       border-collapse:collapse;
     }
+
     th,td{
       border:1px solid var(--line);
       padding:10px;
       text-align:left;
       vertical-align:top;
     }
+
     th{background:#172443}
     td[contenteditable="true"]{background:#0c1428}
 
-    .row-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .row-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
 
     .section-block{
       margin-top:22px;
@@ -333,9 +330,7 @@
       z-index:9999;
     }
 
-    .lightbox.active{
-      display:flex;
-    }
+    .lightbox.active{display:flex}
 
     .lightbox-content{
       position:relative;
@@ -371,21 +366,10 @@
     }
 
     @media (max-width: 980px){
-      .bone-content{
-        grid-template-columns:1fr;
-      }
-
-      .portrait-gallery{
-        grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      }
-
-      .portrait-gallery .thumb{
-        min-height:360px;
-      }
-
-      .portrait-gallery .thumb img{
-        height:340px;
-      }
+      .bone-content{grid-template-columns:1fr}
+      .portrait-gallery{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+      .portrait-gallery .thumb{min-height:360px}
+      .portrait-gallery .thumb img{height:340px}
     }
 
     @media print{
@@ -409,6 +393,7 @@
         <p class="sub">OSTEOLOGIA</p>
         <p class="sub">GENERALIDADES e ESQUELETO AXIAL</p>
       </div>
+
       <div class="actions">
         <button id="noteBtn" class="btn-note" type="button">Tomar nota</button>
         <button id="pdfBtn" class="btn-pdf" type="button">Salvar em PDF</button>
@@ -420,10 +405,12 @@
       <div class="term-box">
         <strong>1. Defina esqueleto axial e esqueleto apendicular.</strong>
       </div>
+
       <div class="note-wrapper">
         <label class="field-label">Resposta / anotações</label>
         <textarea data-note-id="sec-1" placeholder="Digite aqui..."></textarea>
       </div>
+
       <div class="upload-actions">
         <label class="btn-camera">
           <input class="hidden-input" type="file" accept="image/*" capture="environment" multiple data-image-id="sec-1">
@@ -434,6 +421,7 @@
           Inserir arquivo
         </label>
       </div>
+
       <div class="gallery" id="gallery-sec-1"></div>
     </section>
 
@@ -464,6 +452,7 @@
         <label class="field-label">Anotações</label>
         <textarea data-note-id="sec-2" placeholder="Digite aqui..."></textarea>
       </div>
+
       <div class="upload-actions">
         <label class="btn-camera">
           <input class="hidden-input" type="file" accept="image/*" capture="environment" multiple data-image-id="sec-2">
@@ -474,6 +463,7 @@
           Inserir arquivo
         </label>
       </div>
+
       <div class="gallery" id="gallery-sec-2"></div>
     </section>
 
@@ -493,10 +483,12 @@
           <li>Cavidade medular</li>
         </ul>
       </div>
+
       <div class="note-wrapper">
         <label class="field-label">Anotações</label>
         <textarea data-note-id="sec-3" placeholder="Digite aqui..."></textarea>
       </div>
+
       <div class="upload-actions">
         <label class="btn-camera">
           <input class="hidden-input" type="file" accept="image/*" capture="environment" multiple data-image-id="sec-3">
@@ -507,6 +499,7 @@
           Inserir arquivo
         </label>
       </div>
+
       <div class="gallery" id="gallery-sec-3"></div>
     </section>
 
@@ -519,10 +512,12 @@
           <li>Lâmina interna da calvária</li>
         </ul>
       </div>
+
       <div class="note-wrapper">
         <label class="field-label">Anotações</label>
         <textarea data-note-id="sec-4" placeholder="Digite aqui..."></textarea>
       </div>
+
       <div class="upload-actions">
         <label class="btn-camera">
           <input class="hidden-input" type="file" accept="image/*" capture="environment" multiple data-image-id="sec-4">
@@ -533,18 +528,21 @@
           Inserir arquivo
         </label>
       </div>
+
       <div class="gallery" id="gallery-sec-4"></div>
     </section>
 
     <section class="card">
       <h2>ESQUELETO AXIAL</h2>
       <p class="small-help">Cada bloco abaixo permite tirar foto do material ou inserir imagens específicas daquela estrutura. As fotos ficam em formato retrato, maiores e sem achatamento.</p>
+
       <div id="sectionsRoot"></div>
 
       <div class="note-wrapper">
         <label class="field-label">Anotações gerais</label>
         <textarea data-note-id="sec-geral" placeholder="Digite aqui..."></textarea>
       </div>
+
       <div class="upload-actions">
         <label class="btn-camera">
           <input class="hidden-input" type="file" accept="image/*" capture="environment" multiple data-image-id="sec-geral">
@@ -555,18 +553,17 @@
           Inserir arquivo
         </label>
       </div>
+
       <div class="gallery" id="gallery-sec-geral"></div>
       <div class="ok" id="saveMsg">Anotações e imagens salvas no navegador.</div>
     </section>
 
-    <footer>
-      Cláudia Pinheiro responsável tecnológico
-    </footer>
+    <footer>Cláudia Pinheiro responsável tecnológico</footer>
   </div>
 
-  <div id="lightbox" class="lightbox" aria-hidden="true">
+  <div class="lightbox" id="lightbox" aria-hidden="true">
     <div class="lightbox-content">
-      <button id="lightboxClose" class="lightbox-close" type="button">×</button>
+      <button class="lightbox-close" id="lightboxClose" type="button">×</button>
       <img id="lightboxImg" alt="Imagem ampliada">
     </div>
   </div>
@@ -580,54 +577,28 @@
             nome: "1. Frontal",
             imageId: "Frontal",
             termos: [
-              "a. Escama frontal",
-              "b. Túber frontal",
-              "c. Arco superciliar",
-              "d. Glabela",
-              "e. Margem supra-orbital",
-              "f. Incisura supra-orbital (forame supra-orbital)",
-              "g. Parte orbital",
-              "h. Parte nasal",
-              "i. Sutura frontal – Sutura metópica*",
-              "j. Seio frontal"
+              "a. Escama frontal","b. Túber frontal","c. Arco superciliar","d. Glabela","e. Margem supra-orbital",
+              "f. Incisura supra-orbital (forame supra-orbital)","g. Parte orbital","h. Parte nasal",
+              "i. Sutura frontal – Sutura metópica*","j. Seio frontal"
             ]
           },
           {
             nome: "2. Occipital",
             imageId: "Occipital",
             termos: [
-              "a. Protuberância occipital externa",
-              "b. Crista occipital externa",
-              "c. Linha nucal superior",
-              "d. Linha nucal inferior",
-              "e. Protuberância occipital interna",
-              "f. Crista occipital interna",
-              "g. Sulco do seio transverso",
-              "h. Sulco do seio sagital superior",
-              "i. Sulco do seio sigmoide",
-              "j. Sulco do seio petroso inferior",
-              "k. Côndilo occipital",
-              "l. Canal do nervo hipoglosso",
-              "m. Canal condilar",
-              "n. Forame magno",
-              "o. Forame jugular",
-              "p. Parte basilar",
-              "q. Clivo",
-              "r. Fossa cerebelar",
-              "s. Fossa cerebral"
+              "a. Protuberância occipital externa","b. Crista occipital externa","c. Linha nucal superior","d. Linha nucal inferior",
+              "e. Protuberância occipital interna","f. Crista occipital interna","g. Sulco do seio transverso",
+              "h. Sulco do seio sagital superior","i. Sulco do seio sigmoide","j. Sulco do seio petroso inferior",
+              "k. Côndilo occipital","l. Canal do nervo hipoglosso","m. Canal condilar","n. Forame magno",
+              "o. Forame jugular","p. Parte basilar","q. Clivo","r. Fossa cerebelar","s. Fossa cerebral"
             ]
           },
           {
             nome: "3. Etmoide",
             imageId: "Etmoide",
             termos: [
-              "a. Lâmina perpendicular",
-              "b. Lâmina cribriforme",
-              "c. Lâmina orbital",
-              "d. Crista etmoidal",
-              "e. Concha nasal superior",
-              "f. Concha nasal média",
-              "g. Seio etmoidal",
+              "a. Lâmina perpendicular","b. Lâmina cribriforme","c. Lâmina orbital","d. Crista etmoidal",
+              "e. Concha nasal superior","f. Concha nasal média","g. Seio etmoidal",
               "h. Células etmoidais anteriores, médias e posteriores"
             ]
           },
@@ -635,173 +606,76 @@
             nome: "4. Mandíbula",
             imageId: "Mandibula",
             termos: [
-              "a. Corpo da mandíbula",
-              "b. Ramo da mandíbula",
-              "c. Ângulo da mandíbula",
-              "d. Tuberosidade massetérica",
-              "e. Tuberosidade pterigoidea",
-              "f. Base da mandíbula",
-              "g. Sínfise da mandíbula",
-              "h. Protuberância mentual",
-              "i. Tubérculo mentual",
-              "j. Forame mentual",
-              "k. Parte alveolar",
-              "l. Alvéolos dentais",
-              "m. Septos interalveolares",
-              "n. Septos interradiculares",
-              "o. Trígono retromolar",
-              "p. Linha oblíqua",
-              "q. Processo condilar",
-              "i. Cabeça da mandíbula",
-              "ii. Colo da mandíbula",
-              "iii. Fóvea pterigoidea",
-              "r. Processo coronoide",
-              "i. Crista temporal",
-              "s. Incisura da mandíbula",
-              "t. Forame da mandíbula",
-              "u. Canal da mandíbula",
-              "v. Língula da mandíbula",
-              "w. Fóvea submentual",
-              "x. Espinha geniana",
-              "y. Fossa digástrica",
-              "z. Fóvea submandibular",
-              "aa. Linha milo-hioidea",
-              "bb. Toro mandibular"
+              "a. Corpo da mandíbula","b. Ramo da mandíbula","c. Ângulo da mandíbula","d. Tuberosidade massetérica",
+              "e. Tuberosidade pterigoidea","f. Base da mandíbula","g. Sínfise da mandíbula","h. Protuberância mentual",
+              "i. Tubérculo mentual","j. Forame mentual","k. Parte alveolar","l. Alvéolos dentais",
+              "m. Septos interalveolares","n. Septos interradiculares","o. Trígono retromolar","p. Linha oblíqua",
+              "q. Processo condilar","i. Cabeça da mandíbula","ii. Colo da mandíbula","iii. Fóvea pterigoidea",
+              "r. Processo coronoide","i. Crista temporal","s. Incisura da mandíbula","t. Forame da mandíbula",
+              "u. Canal da mandíbula","v. Língula da mandíbula","w. Fóvea submentual","x. Espinha geniana",
+              "y. Fossa digástrica","z. Fóvea submandibular","aa. Linha milo-hioidea","bb. Toro mandibular"
             ]
           },
           {
             nome: "5. Parietal",
             imageId: "Parietal",
             termos: [
-              "a. Face interna",
-              "i. Sulco do seio sagital superior",
-              "b. Face externa",
-              "i. Linha temporal superior",
-              "ii. Linha temporal inferior",
-              "iii. Túber parietal (eminência parietal)",
-              "iv. Vértice",
-              "c. Margem frontal",
-              "d. Margem escamosa",
-              "e. Margem occipital",
-              "f. Margem sagital",
-              "g. Forame parietal"
+              "a. Face interna","i. Sulco do seio sagital superior","b. Face externa","i. Linha temporal superior",
+              "ii. Linha temporal inferior","iii. Túber parietal (eminência parietal)","iv. Vértice","c. Margem frontal",
+              "d. Margem escamosa","e. Margem occipital","f. Margem sagital","g. Forame parietal"
             ]
           },
           {
             nome: "6. Temporal",
             imageId: "Temporal",
             termos: [
-              "a. Parte escamosa",
-              "b. Parte timpânica",
-              "c. Parte petrosa",
-              "d. Processo mastoide",
-              "e. Incisura mastoidea",
-              "f. Sulco da artéria occipital",
-              "g. Poro/meato acústico externo",
-              "h. Poro/meato acústico interno",
-              "i. Processo estiloide",
-              "j. Forame estilomastoideo",
-              "k. Canal carótico",
+              "a. Parte escamosa","b. Parte timpânica","c. Parte petrosa","d. Processo mastoide","e. Incisura mastoidea",
+              "f. Sulco da artéria occipital","g. Poro/meato acústico externo","h. Poro/meato acústico interno",
+              "i. Processo estiloide","j. Forame estilomastoideo","k. Canal carótico",
               "l. Forame lacerado (artefato de crânio seco; in vivo é fechado por uma cartilagem atravessada por pequenas veias e ramos da artéria meníngea)",
-              "m. Fossa mandibular",
-              "n. Tubérculo articular",
-              "o. Arco zigomático",
-              "p. Fossa temporal",
-              "q. Fossa infratemporal",
-              "r. Sulco do seio sigmoide"
+              "m. Fossa mandibular","n. Tubérculo articular","o. Arco zigomático","p. Fossa temporal",
+              "q. Fossa infratemporal","r. Sulco do seio sigmoide"
             ]
           },
           {
             nome: "7. Esfenoide",
             imageId: "Esfenoide",
             termos: [
-              "a. Corpo",
-              "b. Asa menor",
-              "c. Asa maior",
-              "d. Sela turca",
-              "e. Tubérculo da sela",
-              "f. Fossa hipofisial",
-              "g. Processo clinóide anterior",
-              "h. Processo clinóide posterior",
-              "i. Canal óptico",
-              "j. Fissura orbital superior",
-              "k. Fissura orbital inferior",
-              "l. Forame redondo",
-              "m. Forame oval",
-              "n. Forame espinhoso",
-              "o. Processo pterigoide",
-              "p. Lâmina lateral do processo pterigoide",
-              "q. Lâmina medial do processo pterigoide",
-              "r. Fossa pterigoidea",
-              "s. Hâmulo pterigoideo",
-              "t. Crista infratemporal",
-              "u. Fossa pterigopalatina",
-              "v. Seio esfenoidal",
-              "w. Cóanos"
+              "a. Corpo","b. Asa menor","c. Asa maior","d. Sela turca","e. Tubérculo da sela","f. Fossa hipofisial",
+              "g. Processo clinóide anterior","h. Processo clinóide posterior","i. Canal óptico",
+              "j. Fissura orbital superior","k. Fissura orbital inferior","l. Forame redondo","m. Forame oval",
+              "n. Forame espinhoso","o. Processo pterigoide","p. Lâmina lateral do processo pterigoide",
+              "q. Lâmina medial do processo pterigoide","r. Fossa pterigoidea","s. Hâmulo pterigoideo",
+              "t. Crista infratemporal","u. Fossa pterigopalatina","v. Seio esfenoidal","w. Cóanos"
             ]
           },
-          {
-            nome: "8. Vômer",
-            imageId: "Vomer",
-            termos: [
-              "a. Crista coanal do vômer"
-            ]
-          },
+          { nome: "8. Vômer", imageId: "Vomer", termos: ["a. Crista coanal do vômer"] },
           {
             nome: "9. Palatino",
             imageId: "Palatino",
             termos: [
-              "a. Lâmina perpendicular",
-              "b. Lâmina horizontal",
-              "c. Forame palatino maior",
-              "d. Forames palatinos menores",
-              "e. Espinha nasal posterior",
-              "f. Processo orbital"
+              "a. Lâmina perpendicular","b. Lâmina horizontal","c. Forame palatino maior",
+              "d. Forames palatinos menores","e. Espinha nasal posterior","f. Processo orbital"
             ]
           },
           {
             nome: "10. Maxila",
             imageId: "Maxila",
             termos: [
-              "a. Corpo da maxila",
-              "b. Seio maxilar",
-              "c. Face orbital",
-              "i. Sulco infra-orbital",
-              "ii. Canal infra-orbital",
-              "d. Margem infra-orbital",
-              "e. Forame infra-orbital",
-              "f. Fossa canina",
-              "g. Espinha nasal anterior",
-              "h. Túber da maxila",
-              "i. Processo frontal",
-              "j. Processo zigomático",
-              "k. Processo alveolar",
-              "i. Alvéolos dentais",
-              "ii. Septo interalveolar",
-              "iii. Septo interadicular",
-              "iv. Forame incisivo",
-              "l. Processo palatino",
-              "i. Toro palatino",
-              "m. Abertura piriforme"
+              "a. Corpo da maxila","b. Seio maxilar","c. Face orbital","i. Sulco infra-orbital",
+              "ii. Canal infra-orbital","d. Margem infra-orbital","e. Forame infra-orbital","f. Fossa canina",
+              "g. Espinha nasal anterior","h. Túber da maxila","i. Processo frontal","j. Processo zigomático",
+              "k. Processo alveolar","i. Alvéolos dentais","ii. Septo interalveolar","iii. Septo interadicular",
+              "iv. Forame incisivo","l. Processo palatino","i. Toro palatino","m. Abertura piriforme"
             ]
           },
           { nome: "11. Nasal", imageId: "Nasal", termos: [] },
-          {
-            nome: "12. Lacrimal",
-            imageId: "Lacrimal",
-            termos: [
-              "a. Sulco lacrimal"
-            ]
-          },
+          { nome: "12. Lacrimal", imageId: "Lacrimal", termos: ["a. Sulco lacrimal"] },
           { nome: "13. Concha nasal inferior", imageId: "ConchaNasalInferior", termos: [] },
           {
             nome: "14. Zigomático",
             imageId: "Zigomatico",
-            termos: [
-              "a. Processo frontal",
-              "b. Processo temporal",
-              "c. Forame zigomaticofrontal"
-            ]
+            termos: ["a. Processo frontal","b. Processo temporal","c. Forame zigomaticofrontal"]
           },
           { nome: "15. Fontículo anterior", imageId: "FonticuloAnterior", termos: [] },
           { nome: "16. Fontículo posterior", imageId: "FonticuloPosterior", termos: [] },
@@ -826,31 +700,18 @@
           {
             nome: "35. Calvária",
             imageId: "Calvaria",
-            termos: [
-              "a. Sulcos arteriovenosos",
-              "b. Impressões dos giros",
-              "c. Fovéolas granulares"
-            ]
+            termos: ["a. Sulcos arteriovenosos","b. Impressões dos giros","c. Fovéolas granulares"]
           },
           { nome: "36. Base externa do crânio", imageId: "BaseExternaDoCranio", termos: [] },
           {
             nome: "37. Base interna do crânio",
             imageId: "BaseInternaDoCranio",
-            termos: [
-              "a. Fossa anterior do crânio",
-              "b. Fossa média do crânio",
-              "c. Fossa posterior do crânio",
-              "d. Fossa cerebelar"
-            ]
+            termos: ["a. Fossa anterior do crânio","b. Fossa média do crânio","c. Fossa posterior do crânio","d. Fossa cerebelar"]
           },
           {
             nome: "38. Ossículos da audição",
             imageId: "OssiculosDaAudicao",
-            termos: [
-              "a. Martelo",
-              "b. Bigorna",
-              "c. Estribo"
-            ]
+            termos: ["a. Martelo","b. Bigorna","c. Estribo"]
           }
         ]
       },
@@ -865,14 +726,7 @@
       {
         titulo: "OSSO ESTERNO",
         itens: [
-          {
-            nome: "1. Manúbrio do esterno",
-            imageId: "ManubrioDoEsterno",
-            termos: [
-              "a. Incisura jugular",
-              "b. Incisura clavicular"
-            ]
-          },
+          { nome: "1. Manúbrio do esterno", imageId: "ManubrioDoEsterno", termos: ["a. Incisura jugular","b. Incisura clavicular"] },
           { nome: "2. Ângulo do esterno", imageId: "AnguloDoEsterno", termos: [] },
           { nome: "3. Corpo do esterno", imageId: "CorpoDoEsterno", termos: [] },
           { nome: "4. Processo xifoide", imageId: "ProcessoXifoide", termos: [] },
@@ -886,29 +740,12 @@
             nome: "Generalidades",
             imageId: "GeneralidadesVertebras",
             termos: [
-              "1. Corpo vertebral",
-              "2. Arco vertebral",
-              "a. Pedículo do arco vertebral",
-              "b. Lâmina do arco vertebral",
-              "3. Forame vertebral",
-              "4. Canal vertebral",
-              "5. Processo espinhoso",
-              "6. Processo transverso",
-              "7. Processo articular superior",
-              "8. Processo articular inferior",
-              "9. Incisura vertebral superior",
-              "10. Incisura vertebral inferior",
-              "11. Forame intervertebral",
-              "12. Forame transversário (nas vértebras cervicais)",
-              "13. Curvaturas primárias",
-              "a. Cifose torácica",
-              "b. Cifose sacral",
-              "14. Curvaturas secundárias",
-              "a. Lordose cervical",
-              "b. Lordose lombar",
-              "15. Escoliose",
-              "16. Hipercifose",
-              "17. Hiperlordose",
+              "1. Corpo vertebral","2. Arco vertebral","a. Pedículo do arco vertebral","b. Lâmina do arco vertebral",
+              "3. Forame vertebral","4. Canal vertebral","5. Processo espinhoso","6. Processo transverso",
+              "7. Processo articular superior","8. Processo articular inferior","9. Incisura vertebral superior",
+              "10. Incisura vertebral inferior","11. Forame intervertebral","12. Forame transversário (nas vértebras cervicais)",
+              "13. Curvaturas primárias","a. Cifose torácica","b. Cifose sacral","14. Curvaturas secundárias",
+              "a. Lordose cervical","b. Lordose lombar","15. Escoliose","16. Hipercifose","17. Hiperlordose",
               "18. Disco intervertebral"
             ]
           }
@@ -921,15 +758,9 @@
             nome: "CI (Atlas)",
             imageId: "Atlas",
             termos: [
-              "19. Massa lateral do atlas",
-              "a. Face articular superior",
-              "b. Face articular inferior",
-              "20. Arco anterior do atlas",
-              "a. Tubérculo anterior",
-              "b. Fóvea do dente",
-              "21. Arco posterior do atlas",
-              "a. Tubérculo posterior",
-              "b. Sulco da artéria vertebral",
+              "19. Massa lateral do atlas","a. Face articular superior","b. Face articular inferior",
+              "20. Arco anterior do atlas","a. Tubérculo anterior","b. Fóvea do dente",
+              "21. Arco posterior do atlas","a. Tubérculo posterior","b. Sulco da artéria vertebral",
               "22. Forame transversário"
             ]
           },
@@ -937,33 +768,23 @@
             nome: "CII (Áxis)",
             imageId: "Axis",
             termos: [
-              "23. Dente do áxis",
-              "a. Ápice do dente do áxis",
-              "b. Face articular anterior",
-              "c. Face articular posterior",
-              "24. Forame transversário",
-              "25. Processo transverso",
-              "a. Tubérculo anterior",
-              "b. Tubérculo posterior"
+              "23. Dente do áxis","a. Ápice do dente do áxis","b. Face articular anterior",
+              "c. Face articular posterior","24. Forame transversário","25. Processo transverso",
+              "a. Tubérculo anterior","b. Tubérculo posterior"
             ]
           },
           {
             nome: "Vértebras CIII a CVI – Vértebras cervicais típicas",
             imageId: "CIIIaCVI",
             termos: [
-              "26. Unco do corpo",
-              "27. Forame transversário",
-              "28. Tubérculo anterior",
-              "29. Tubérculo posterior",
-              "30. Sulco do nervo espinal"
+              "26. Unco do corpo","27. Forame transversário","28. Tubérculo anterior",
+              "29. Tubérculo posterior","30. Sulco do nervo espinal"
             ]
           },
           {
             nome: "Vértebra CVII – Vértebra proeminente",
             imageId: "CVII",
-            termos: [
-              "31. Forame transversário"
-            ]
+            termos: ["31. Forame transversário"]
           }
         ]
       },
@@ -974,17 +795,12 @@
             nome: "Vértebras torácicas",
             imageId: "VertebrasToracicas",
             termos: [
-              "32. Fóvea costal superior",
-              "33. Fóvea costal inferior",
-              "34. Fóvea costal do processo transverso"
+              "32. Fóvea costal superior","33. Fóvea costal inferior","34. Fóvea costal do processo transverso"
             ]
           }
         ]
       },
-      {
-        titulo: "Vértebras lombares (LI a LV)",
-        itens: []
-      },
+      { titulo: "Vértebras lombares (LI a LV)", itens: [] },
       {
         titulo: "Vértebras sacrais (SI a SV; Sacro)",
         itens: [
@@ -992,24 +808,11 @@
             nome: "Sacro",
             imageId: "Sacro",
             termos: [
-              "35. Ápice do sacro",
-              "36. Base do sacro",
-              "a. Promontório",
-              "b. Asa do sacro",
-              "c. Processo articular superior",
-              "37. Parte lateral",
-              "a. Face auricular",
-              "38. Face pélvica",
-              "a. Linhas transversas",
-              "b. Forames sacrais anteriores",
-              "39. Face dorsal",
-              "a. Forames sacrais posteriores",
-              "b. Crista sacral mediana",
-              "c. Crista sacral medial",
-              "d. Crista sacral lateral",
-              "40. Corno sacral",
-              "41. Canal sacral",
-              "a. Hiato sacral"
+              "35. Ápice do sacro","36. Base do sacro","a. Promontório","b. Asa do sacro","c. Processo articular superior",
+              "37. Parte lateral","a. Face auricular","38. Face pélvica","a. Linhas transversas",
+              "b. Forames sacrais anteriores","39. Face dorsal","a. Forames sacrais posteriores",
+              "b. Crista sacral mediana","c. Crista sacral medial","d. Crista sacral lateral",
+              "40. Corno sacral","41. Canal sacral","a. Hiato sacral"
             ]
           }
         ]
@@ -1017,13 +820,7 @@
       {
         titulo: "Vértebras coccígeas (Co I a Co IV; Cóccix)",
         itens: [
-          {
-            nome: "Cóccix",
-            imageId: "Coccix",
-            termos: [
-              "42. Corno coccígeo"
-            ]
-          }
+          { nome: "Cóccix", imageId: "Coccix", termos: ["42. Corno coccígeo"] }
         ]
       },
       {
@@ -1033,25 +830,13 @@
             nome: "Costelas",
             imageId: "Costelas",
             termos: [
-              "43. Costelas verdadeiras (1° ao 7° par)",
-              "44. Costelas falsas (8° ao 10° par)",
-              "45. Costelas flutuantes (11° e 12° par)",
-              "46. Cartilagem costal",
-              "47. Margem costal",
-              "48. Cabeça da costela",
-              "a. Face articular superior da cabeça da costela",
-              "b. Face articular inferior da cabeça da costela",
-              "49. Colo da costela",
-              "50. Tubérculo da costela",
-              "51. Ângulo da costela",
-              "52. Corpo da costela",
-              "a. Sulco da costela",
-              "53. Costela I",
-              "a. Sulco da artéria subclávia",
-              "b. Tubérculo do músculo escaleno anterior",
-              "c. Sulco da veia subclávia",
-              "54. Costela II",
-              "a. Tuberosidade do músculo serrátil anterior"
+              "43. Costelas verdadeiras (1° ao 7° par)","44. Costelas falsas (8° ao 10° par)",
+              "45. Costelas flutuantes (11° e 12° par)","46. Cartilagem costal","47. Margem costal",
+              "48. Cabeça da costela","a. Face articular superior da cabeça da costela",
+              "b. Face articular inferior da cabeça da costela","49. Colo da costela","50. Tubérculo da costela",
+              "51. Ângulo da costela","52. Corpo da costela","a. Sulco da costela","53. Costela I",
+              "a. Sulco da artéria subclávia","b. Tubérculo do músculo escaleno anterior",
+              "c. Sulco da veia subclávia","54. Costela II","a. Tuberosidade do músculo serrátil anterior"
             ]
           }
         ]
@@ -1069,7 +854,10 @@
     const lightboxImg = document.getElementById('lightboxImg');
     const lightboxClose = document.getElementById('lightboxClose');
 
-    const images = JSON.parse(localStorage.getItem('roteiro-images') || '{}');
+    let db;
+    const DB_NAME = 'roteiroAnatomiaDB';
+    const STORE_NAME = 'images';
+    const IMAGE_CACHE = {};
 
     function showSaved(){
       saveMsg.style.display = 'block';
@@ -1077,9 +865,60 @@
       window._saveMsgTimer = setTimeout(() => saveMsg.style.display = 'none', 1600);
     }
 
+    function openDB(){
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, 1);
+
+        request.onupgradeneeded = function(event){
+          const database = event.target.result;
+          if(!database.objectStoreNames.contains(STORE_NAME)){
+            database.createObjectStore(STORE_NAME, { keyPath: 'id' });
+          }
+        };
+
+        request.onsuccess = function(event){
+          db = event.target.result;
+          resolve(db);
+        };
+
+        request.onerror = function(){
+          reject(request.error);
+        };
+      });
+    }
+
+    function getAllImages(){
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.getAll();
+
+        req.onsuccess = () => {
+          const map = {};
+          (req.result || []).forEach(item => {
+            map[item.id] = item.images || [];
+          });
+          resolve(map);
+        };
+
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    function saveSectionImages(sectionId, list){
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        store.put({ id: sectionId, images: list });
+
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+      });
+    }
+
     function addEmptyRow(){
       const tr = document.createElement('tr');
-      for(let i=0;i<3;i++){
+      for(let i = 0; i < 3; i++){
         const td = document.createElement('td');
         td.contentEditable = 'true';
         td.spellcheck = false;
@@ -1090,7 +929,7 @@
 
     function resetRows(){
       tableBody.innerHTML = '';
-      for(let i=0;i<12;i++) addEmptyRow();
+      for(let i = 0; i < 12; i++) addEmptyRow();
     }
 
     function saveTable(){
@@ -1104,6 +943,7 @@
 
     function loadTable(){
       const saved = JSON.parse(localStorage.getItem('table-ossos') || 'null');
+
       if(saved && Array.isArray(saved) && saved.length){
         tableBody.innerHTML = '';
         saved.forEach(row => {
@@ -1138,10 +978,6 @@
       });
     }
 
-    function saveImages(){
-      localStorage.setItem('roteiro-images', JSON.stringify(images));
-    }
-
     function openLightbox(src){
       lightboxImg.src = src;
       lightbox.classList.add('active');
@@ -1156,25 +992,27 @@
 
     lightboxClose.addEventListener('click', closeLightbox);
     lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) closeLightbox();
+      if(e.target === lightbox) closeLightbox();
     });
+
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeLightbox();
+      if(e.key === 'Escape') closeLightbox();
     });
 
     function renderGallery(sectionId){
       const gallery = document.getElementById('gallery-' + sectionId);
       if(!gallery) return;
-      gallery.innerHTML = '';
 
+      gallery.innerHTML = '';
       const isBoneGallery = sectionId.startsWith('item-');
-      if (isBoneGallery) {
+
+      if(isBoneGallery){
         gallery.classList.add('portrait-gallery');
       } else {
         gallery.classList.remove('portrait-gallery');
       }
 
-      (images[sectionId] || []).forEach((src, index) => {
+      (IMAGE_CACHE[sectionId] || []).forEach((src, index) => {
         const box = document.createElement('div');
         box.className = 'thumb';
 
@@ -1187,9 +1025,9 @@
         del.textContent = '×';
         del.title = 'Remover imagem';
         del.className = 'remove-btn';
-        del.onclick = () => {
-          images[sectionId].splice(index, 1);
-          saveImages();
+        del.onclick = async () => {
+          IMAGE_CACHE[sectionId].splice(index, 1);
+          await saveSectionImages(sectionId, IMAGE_CACHE[sectionId]);
           renderGallery(sectionId);
           showSaved();
         };
@@ -1211,31 +1049,74 @@
       });
     }
 
+    function fileToDataURL(file){
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = e => resolve(e.target.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function loadImage(src){
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+      });
+    }
+
+    async function compressImage(file, maxW = 1600, maxH = 1600, quality = 0.78){
+      const dataUrl = await fileToDataURL(file);
+      const img = await loadImage(dataUrl);
+
+      let { width, height } = img;
+
+      if(width > maxW || height > maxH){
+        const ratio = Math.min(maxW / width, maxH / height);
+        width = Math.round(width * ratio);
+        height = Math.round(height * ratio);
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+
+      return canvas.toDataURL('image/jpeg', quality);
+    }
+
+    async function handleFiles(sectionId, files, input){
+      if(!files.length) return;
+
+      if(!IMAGE_CACHE[sectionId]) IMAGE_CACHE[sectionId] = [];
+
+      for(const file of files){
+        try{
+          const compressed = await compressImage(file);
+          IMAGE_CACHE[sectionId].push(compressed);
+        }catch(error){
+          console.error('Erro ao processar imagem:', error);
+        }
+      }
+
+      await saveSectionImages(sectionId, IMAGE_CACHE[sectionId]);
+      renderGallery(sectionId);
+      input.value = '';
+      showSaved();
+    }
+
     function setupImageInputs(){
       document.querySelectorAll('input[data-image-id]').forEach(input => {
         const sectionId = input.dataset.imageId;
         renderGallery(sectionId);
 
-        input.addEventListener('change', e => {
+        input.addEventListener('change', async e => {
           const files = Array.from(e.target.files || []);
-          if(!files.length) return;
-          if(!images[sectionId]) images[sectionId] = [];
-
-          let done = 0;
-          files.forEach(file => {
-            const reader = new FileReader();
-            reader.onload = ev => {
-              images[sectionId].push(ev.target.result);
-              done++;
-              if(done === files.length){
-                saveImages();
-                renderGallery(sectionId);
-                input.value = '';
-                showSaved();
-              }
-            };
-            reader.readAsDataURL(file);
-          });
+          await handleFiles(sectionId, files, input);
         });
       });
     }
@@ -1252,7 +1133,7 @@
         title.textContent = section.titulo;
         block.appendChild(title);
 
-        if (!section.itens.length) {
+        if(!section.itens.length){
           const empty = document.createElement('p');
           empty.className = 'small-help';
           empty.textContent = 'Sem subtópicos listados neste bloco.';
@@ -1290,14 +1171,17 @@
           content.className = 'bone-content';
 
           const left = document.createElement('div');
-          if (item.termos.length) {
+
+          if(item.termos.length){
             const ul = document.createElement('ul');
             ul.className = 'bone-list';
+
             item.termos.forEach(term => {
               const li = document.createElement('li');
               li.textContent = term;
               ul.appendChild(li);
             });
+
             left.appendChild(ul);
           } else {
             const p = document.createElement('p');
@@ -1340,19 +1224,19 @@
       showSaved();
     });
 
-    renderSections();
-    loadTable();
-    loadNotes();
-    setupImageInputs();
-  </script>
+    async function init(){
+      renderSections();
+      loadTable();
+      loadNotes();
 
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./service-worker.js')
-          .catch(error => console.error('Erro ao registrar service worker:', error));
-      });
+      await openDB();
+      const loadedImages = await getAllImages();
+      Object.assign(IMAGE_CACHE, loadedImages);
+
+      setupImageInputs();
     }
+
+    init();
   </script>
 </body>
 </html>

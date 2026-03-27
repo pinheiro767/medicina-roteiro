@@ -5,8 +5,8 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#0b1020",
-  "theme_color": "#0b1020",
+  "background_color": "#fff8fb",
+  "theme_color": "#f7cfe0",
   "description": "Roteiro prático de Anatomia Humana com imagens, notas e uso offline.",
   "icons": [
     {

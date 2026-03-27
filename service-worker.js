@@ -1,4 +1,4 @@
-const CACHE_NAME = 'roteiro-anatomia-v1';
+const CACHE_NAME = 'roteiro-anatomia-pastel-v1';
 
 const ASSETS = [
   './',
@@ -34,8 +34,6 @@ self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
+    caches.match(event.request).then(response => response || fetch(event.request))
   );
 });

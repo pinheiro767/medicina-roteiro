@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Roteiro prático - Anatomia Humana</title>
 
-  <meta name="theme-color" content="#0b1020" />
+  <meta name="theme-color" content="#f7cfe0" />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
@@ -15,116 +15,250 @@
 
   <style>
     :root{
-      --bg:#0b1020;
-      --card:#121a30;
-      --card2:#1a2440;
-      --text:#eef4ff;
-      --muted:#a9b7d0;
-      --line:#2c3a61;
-      --accent:#66b3ff;
-      --accent2:#8b7bff;
-      --ok:#2dd4bf;
-      --prof:#6d28d9;
-      --danger:#dc2626;
-      --install:#0f766e;
+      --bg1:#fff8fb;
+      --bg2:#fefcf7;
+      --bg3:#f5fbff;
+      --card:#ffffffee;
+      --card2:#fff4f7;
+      --card3:#f5fbff;
+      --text:#5e5268;
+      --title:#7f6078;
+      --muted:#9b8fa0;
+      --line:#ead9e5;
+      --line-strong:#dcc7d5;
+      --rose:#f7cfe0;
+      --lav:#e9ddff;
+      --sky:#dff4ff;
+      --mint:#dff6ec;
+      --peach:#ffe8d9;
+      --accent:#c88ca8;
+      --accent2:#9e95d9;
+      --accent3:#7cc3d8;
+      --ok:#61b89a;
+      --prof:#a57ad4;
+      --danger:#e3899d;
+      --install:#7cbfa5;
+      --shadow:0 14px 34px rgba(191,166,185,.18);
+      --radius:22px;
     }
 
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
 
     body{
       margin:0;
       font-family:Arial, Helvetica, sans-serif;
-      background:linear-gradient(180deg,#09101d,#10172a);
+      background:
+        radial-gradient(circle at top left, #ffeef5 0, transparent 34%),
+        radial-gradient(circle at top right, #eaf7ff 0, transparent 30%),
+        linear-gradient(180deg,var(--bg1),var(--bg2) 55%,var(--bg3));
       color:var(--text);
     }
 
+    .hero-bg{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(circle at 12% 14%, rgba(247,207,224,.35), transparent 18%),
+        radial-gradient(circle at 82% 20%, rgba(223,244,255,.45), transparent 20%),
+        radial-gradient(circle at 70% 80%, rgba(233,221,255,.35), transparent 24%),
+        radial-gradient(circle at 20% 78%, rgba(223,246,236,.35), transparent 20%);
+      z-index:0;
+    }
+
     .wrap{
-      max-width:1360px;
+      position:relative;
+      z-index:1;
+      max-width:1380px;
       margin:0 auto;
-      padding:20px;
+      padding:18px;
     }
 
     .top{
       display:flex;
       justify-content:space-between;
-      gap:16px;
+      gap:18px;
       align-items:flex-start;
       flex-wrap:wrap;
       margin-bottom:18px;
+      background:linear-gradient(135deg,rgba(255,255,255,.8),rgba(255,248,251,.88));
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:20px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
     }
 
-    h1{margin:0 0 6px 0;font-size:2rem}
-    .sub{margin:0;color:var(--muted)}
+    .brand{
+      max-width:760px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      background:#fff;
+      color:var(--accent);
+      border:1px solid var(--line);
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:.9rem;
+      font-weight:700;
+      margin-bottom:10px;
+      box-shadow:0 6px 16px rgba(191,166,185,.12);
+    }
+
+    h1{
+      margin:0 0 6px 0;
+      font-size:2rem;
+      color:var(--title);
+    }
+
+    .sub{
+      margin:0;
+      color:var(--muted);
+      line-height:1.5;
+    }
+
     .sub + .sub{margin-top:4px}
 
     .actions{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
+      align-items:flex-start;
+      justify-content:flex-end;
+      max-width:420px;
     }
 
     button, label.btn-upload, label.btn-camera, label.btn-file{
       border:none;
-      border-radius:12px;
+      border-radius:16px;
       padding:12px 16px;
       font-weight:700;
       cursor:pointer;
+      transition:.18s ease;
+      box-shadow:0 8px 18px rgba(191,166,185,.12);
     }
 
-    .btn-note{background:#22304f;color:#fff;border:1px solid #3c5488}
-    .btn-pdf{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
-    .btn-prof{background:linear-gradient(135deg,#5b21b6,#7c3aed);color:#fff;border:1px solid #8b5cf6}
-    .btn-install{background:linear-gradient(135deg,#0f766e,#14b8a6);color:#fff;border:1px solid #2dd4bf}
-    .btn-add{background:#18334a;color:#fff;border:1px solid #27577d}
-    .btn-reset{background:#2a2233;color:#fff;border:1px solid #57406c}
+    button:hover, label.btn-upload:hover, label.btn-camera:hover, label.btn-file:hover{
+      transform:translateY(-1px);
+      box-shadow:0 10px 20px rgba(191,166,185,.18);
+    }
+
+    .btn-note{background:var(--lav);color:#6d5e92;border:1px solid #d8c7ff}
+    .btn-pdf{background:var(--rose);color:#8f6279;border:1px solid #efbfd3}
+    .btn-prof{background:#efe7ff;color:#7d68a8;border:1px solid #d7c7ff}
+    .btn-install{background:var(--mint);color:#4f8b72;border:1px solid #bfe9d5}
+    .btn-add{background:var(--sky);color:#5f8da2;border:1px solid #caeaf7}
+    .btn-reset{background:#fff1f3;color:#b17489;border:1px solid #f3c7d1}
     .btn-zoom{
-      background:#1f4d7a;
-      color:#fff;
-      border:1px solid #4d83b9;
+      background:#f7f1ff;
+      color:#7d68a8;
+      border:1px solid #dfd0ff;
       padding:8px 12px;
-      border-radius:10px;
+      border-radius:12px;
       font-size:.85rem;
+      box-shadow:none;
     }
     .btn-danger{
-      background:var(--danger);
-      color:#fff;
-      border:1px solid #ef4444;
+      background:#fff1f3;
+      color:#c2687f;
+      border:1px solid #f3c7d1;
     }
     .btn-ok{
-      background:#0f766e;
-      color:#fff;
-      border:1px solid #2dd4bf;
+      background:var(--mint);
+      color:#4f8b72;
+      border:1px solid #bfe9d5;
+    }
+
+    .hero-panel{
+      display:grid;
+      grid-template-columns:1.4fr .9fr;
+      gap:16px;
+      margin-bottom:18px;
+    }
+
+    .hero-card, .quick-card{
+      background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,250,252,.9));
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:20px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
+    }
+
+    .hero-card h2,
+    .quick-card h2{
+      margin:0 0 10px 0;
+      color:var(--title);
+    }
+
+    .hero-card p,
+    .quick-card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.55;
+    }
+
+    .pill-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .pill{
+      background:#fff;
+      border:1px solid var(--line);
+      color:var(--muted);
+      padding:10px 12px;
+      border-radius:16px;
+      text-align:center;
+      font-weight:700;
     }
 
     .card{
-      background:var(--card);
+      background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(255,250,252,.94));
       border:1px solid var(--line);
-      border-radius:18px;
+      border-radius:26px;
       padding:18px;
       margin-bottom:16px;
-      box-shadow:0 10px 30px rgba(0,0,0,.25);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
     }
 
     .term-box{
-      background:var(--card2);
+      background:linear-gradient(135deg,var(--card2),#fff);
       border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
+      border-radius:18px;
+      padding:16px;
       margin-top:10px;
+      color:var(--title);
     }
 
-    h2,h3,h4{margin-top:0}
+    h2,h3,h4{
+      margin-top:0;
+      color:var(--title);
+    }
 
     textarea{
       width:100%;
       min-height:110px;
       margin-top:10px;
-      border-radius:12px;
+      border-radius:16px;
       border:1px solid var(--line);
-      background:#0c1428;
+      background:#fff;
       color:var(--text);
       padding:12px;
       resize:vertical;
+      font-size:1rem;
+      box-shadow:inset 0 1px 4px rgba(191,166,185,.06);
+    }
+
+    textarea::placeholder{
+      color:#c0b6c3;
     }
 
     .field-label{
@@ -132,6 +266,7 @@
       margin-top:14px;
       color:var(--muted);
       font-size:.95rem;
+      font-weight:700;
     }
 
     .note-wrapper[hidden]{display:none}
@@ -147,23 +282,23 @@
 
     .btn-upload{
       display:inline-block;
-      background:#16384a;
-      border:1px solid #2b6d8f;
-      color:#fff;
+      background:#fff;
+      border:1px solid #dcecf3;
+      color:#5f8da2;
     }
 
     .btn-camera{
       display:inline-block;
-      background:#1d4ed8;
-      border:1px solid #60a5fa;
-      color:#fff;
+      background:var(--sky);
+      border:1px solid #caeaf7;
+      color:#5f8da2;
     }
 
     .btn-file{
       display:inline-block;
-      background:#14532d;
-      border:1px solid #4ade80;
-      color:#fff;
+      background:var(--peach);
+      border:1px solid #ffd3bc;
+      color:#a77c60;
     }
 
     .btn-upload input, .hidden-input{display:none}
@@ -177,10 +312,12 @@
 
     .thumb{
       position:relative;
-      border-radius:14px;
+      border-radius:18px;
       overflow:hidden;
       border:1px solid var(--line);
-      background:#0c1428;
+      background:#fff;
+      padding:10px;
+      box-shadow:0 10px 18px rgba(191,166,185,.08);
     }
 
     .thumb img{
@@ -188,7 +325,8 @@
       height:220px;
       object-fit:contain;
       display:block;
-      background:#0a1020;
+      background:#fffafc;
+      border-radius:14px;
     }
 
     .portrait-gallery{
@@ -200,7 +338,7 @@
     }
 
     .portrait-gallery .thumb{
-      background:#0a1020;
+      background:#fff;
       min-height:420px;
       display:flex;
       align-items:center;
@@ -213,24 +351,25 @@
       width:100%;
       height:400px;
       object-fit:contain;
-      border-radius:10px;
-      background:#0a1020;
+      border-radius:14px;
+      background:#fffafc;
     }
 
     .thumb button.remove-btn{
       position:absolute;
-      right:8px;
-      top:8px;
-      width:32px;
-      height:32px;
+      right:10px;
+      top:10px;
+      width:34px;
+      height:34px;
       border-radius:999px;
-      background:rgba(0,0,0,.75);
-      color:#fff;
-      border:1px solid rgba(255,255,255,.15);
+      background:#fff1f3;
+      color:#c2687f;
+      border:1px solid #f3c7d1;
       padding:0;
       font-size:18px;
       line-height:1;
       z-index:2;
+      box-shadow:none;
     }
 
     .thumb-actions{
@@ -241,7 +380,14 @@
       padding-top:10px;
     }
 
-    .table-wrap{overflow:auto;margin-top:12px}
+    .table-wrap{
+      overflow:auto;
+      margin-top:12px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:#fff;
+      box-shadow:inset 0 1px 4px rgba(191,166,185,.06);
+    }
 
     table{
       width:100%;
@@ -251,13 +397,19 @@
 
     th,td{
       border:1px solid var(--line);
-      padding:10px;
+      padding:12px 10px;
       text-align:left;
       vertical-align:top;
     }
 
-    th{background:#172443}
-    td[contenteditable="true"]{background:#0c1428}
+    th{
+      background:#fff6fa;
+      color:var(--title);
+    }
+
+    td[contenteditable="true"]{
+      background:#fff;
+    }
 
     .row-actions{
       display:flex;
@@ -269,21 +421,27 @@
     .section-block{
       margin-top:22px;
       padding-top:8px;
-      border-top:1px dashed #3a4d80;
+      border-top:1px dashed #ead9e5;
     }
 
     .section-title{
       margin:0 0 10px 0;
       font-size:1.2rem;
-      color:#d7e7ff;
+      color:var(--title);
+      background:linear-gradient(135deg,#fff6fa,#f5fbff);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px 14px;
+      display:inline-block;
     }
 
     .bone-card{
-      background:#101a31;
-      border:1px solid #314b86;
-      border-radius:16px;
+      background:linear-gradient(180deg,#fff,#fffafc);
+      border:1px solid var(--line);
+      border-radius:20px;
       padding:16px;
       margin-top:16px;
+      box-shadow:0 10px 20px rgba(191,166,185,.08);
     }
 
     .bone-head{
@@ -298,6 +456,7 @@
     .bone-title{
       margin:0;
       font-size:1.08rem;
+      color:var(--title);
     }
 
     .bone-content{
@@ -313,8 +472,9 @@
     }
 
     .bone-list li{
-      margin:5px 0;
-      line-height:1.45;
+      margin:6px 0;
+      line-height:1.5;
+      color:var(--text);
     }
 
     .section-list li{
@@ -324,34 +484,36 @@
 
     .small-help{
       color:var(--muted);
-      font-size:.92rem;
+      font-size:.95rem;
       margin-top:8px;
+      line-height:1.5;
     }
 
     .ok{
       color:var(--ok);
       font-weight:700;
-      margin-top:8px;
+      margin-top:10px;
       display:none;
     }
 
     footer{
       text-align:center;
-      color:#9fb0ca;
-      font-size:.68rem;
+      color:#ab9fad;
+      font-size:.75rem;
       padding:18px 10px 28px;
-      line-height:1.4;
+      line-height:1.5;
     }
 
     .lightbox{
       position:fixed;
       inset:0;
-      background:rgba(0,0,0,.9);
+      background:rgba(122,103,119,.58);
       display:none;
       align-items:center;
       justify-content:center;
       padding:20px;
       z-index:9999;
+      backdrop-filter:blur(6px);
     }
 
     .lightbox.active{display:flex}
@@ -369,21 +531,22 @@
       max-width:95vw;
       max-height:90vh;
       object-fit:contain;
-      border-radius:14px;
-      background:#111827;
+      border-radius:18px;
+      background:#fff;
       display:block;
+      box-shadow:0 18px 40px rgba(122,103,119,.25);
     }
 
     .lightbox-close{
       position:absolute;
       top:-10px;
       right:-10px;
-      width:40px;
-      height:40px;
+      width:42px;
+      height:42px;
       border-radius:999px;
       border:none;
       background:#fff;
-      color:#000;
+      color:#8f6279;
       font-size:22px;
       font-weight:700;
       cursor:pointer;
@@ -392,12 +555,13 @@
     .modal-overlay{
       position:fixed;
       inset:0;
-      background:rgba(0,0,0,.68);
+      background:rgba(122,103,119,.48);
       display:none;
       align-items:center;
       justify-content:center;
       z-index:10000;
       padding:20px;
+      backdrop-filter:blur(6px);
     }
 
     .modal-overlay.active{
@@ -405,30 +569,31 @@
     }
 
     .modal{
-      width:min(480px,100%);
-      background:#131c34;
-      border:1px solid #334a80;
-      border-radius:18px;
+      width:min(520px,100%);
+      background:linear-gradient(180deg,#fff,#fffafc);
+      border:1px solid var(--line);
+      border-radius:24px;
       padding:18px;
-      box-shadow:0 18px 40px rgba(0,0,0,.45);
+      box-shadow:0 18px 40px rgba(122,103,119,.22);
     }
 
     .modal h3{
       margin:0 0 8px 0;
+      color:var(--title);
     }
 
     .modal p{
       color:var(--muted);
       margin:0 0 14px 0;
-      line-height:1.45;
+      line-height:1.55;
     }
 
     .modal input{
       width:100%;
-      background:#0c1428;
-      color:#fff;
+      background:#fff;
+      color:var(--text);
       border:1px solid var(--line);
-      border-radius:12px;
+      border-radius:16px;
       padding:12px;
       font-size:1rem;
       margin-bottom:12px;
@@ -444,8 +609,39 @@
     .modal-msg{
       min-height:20px;
       margin-top:10px;
-      color:#fca5a5;
+      color:#c2687f;
       font-size:.92rem;
+    }
+
+    .ios-steps{
+      margin:0;
+      padding-left:18px;
+      color:var(--text);
+      line-height:1.6;
+    }
+
+    .ios-steps li{
+      margin:6px 0;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      background:#fff6fa;
+      color:#a77c60;
+      border:1px solid #f2dde5;
+      border-radius:999px;
+      padding:7px 11px;
+      font-size:.84rem;
+      font-weight:700;
+      margin-bottom:12px;
+    }
+
+    @media (max-width: 1020px){
+      .hero-panel{
+        grid-template-columns:1fr;
+      }
     }
 
     @media (max-width: 980px){
@@ -455,10 +651,30 @@
       .portrait-gallery .thumb img{height:340px}
     }
 
+    @media (max-width: 720px){
+      .wrap{padding:14px}
+      .top{
+        border-radius:24px;
+        padding:16px;
+      }
+      h1{font-size:1.7rem}
+      .actions{width:100%}
+      .actions > *{
+        flex:1 1 180px;
+        text-align:center;
+      }
+      .hero-card,.quick-card,.card{
+        border-radius:22px;
+      }
+      .table-wrap{
+        border-radius:16px;
+      }
+    }
+
     @media print{
       body{background:#fff;color:#000}
-      .actions,.upload-row,.upload-actions,.thumb button,.thumb-actions,.btn-add,.btn-reset,.ok,.small-help,.lightbox,.modal-overlay{display:none !important}
-      .card,.term-box,.bone-card{background:#fff;color:#000;border:1px solid #bbb;box-shadow:none}
+      .hero-bg,.actions,.hero-panel,.upload-row,.upload-actions,.thumb button,.thumb-actions,.btn-add,.btn-reset,.ok,.small-help,.lightbox,.modal-overlay{display:none !important}
+      .card,.term-box,.bone-card,.top{background:#fff !important;color:#000;border:1px solid #bbb;box-shadow:none}
       textarea{background:#fff;color:#000;border:1px solid #bbb}
       th,td{border:1px solid #bbb;color:#000}
       th{background:#eee}
@@ -467,9 +683,12 @@
   </style>
 </head>
 <body>
+  <div class="hero-bg"></div>
+
   <div class="wrap">
     <div class="top">
-      <div>
+      <div class="brand">
+        <div class="eyebrow">Roteiro interativo • PWA • Uso em aula</div>
         <h1>Roteiro prático - Anatomia Humana</h1>
         <p class="sub">Profª Drª. Carmem Patrícia Barbosa</p>
         <p class="sub">ANATOMIA HUMANA</p>
@@ -481,9 +700,28 @@
         <button id="noteBtn" class="btn-note" type="button">Tomar nota</button>
         <button id="pdfBtn" class="btn-pdf" type="button">Salvar em PDF</button>
         <button id="profBtn" class="btn-prof" type="button">Modo professor</button>
-        <button id="installBtn" class="btn-install" type="button" style="display:none;">Baixar app</button>
+        <button id="installBtn" class="btn-install" type="button">Baixar app</button>
       </div>
     </div>
+
+    <section class="hero-panel">
+      <div class="hero-card">
+        <h2>Roteiro fiel ao conteúdo original</h2>
+        <p>
+          Layout claro, responsivo e acolhedor para uso em celular, tablet e notebook, com
+          anotações, fotos, inserção de arquivos, tabela editável e impressão em PDF.
+        </p>
+      </div>
+      <div class="quick-card">
+        <h2>Acesso rápido</h2>
+        <div class="pill-grid">
+          <div class="pill">📷 Câmera</div>
+          <div class="pill">📁 Inserir arquivo</div>
+          <div class="pill">📲 Baixar app</div>
+          <div class="pill">🖨️ Salvar em PDF</div>
+        </div>
+      </div>
+    </section>
 
     <section class="card">
       <h2>GENERALIDADES e ESQUELETO AXIAL</h2>
@@ -499,7 +737,7 @@
       <div class="upload-actions">
         <label class="btn-camera">
           <input class="hidden-input" type="file" accept="image/*" capture="environment" multiple data-image-id="sec-1">
-          Tirar foto
+          Câmera
         </label>
         <label class="btn-file">
           <input class="hidden-input" type="file" accept="image/*" multiple data-image-id="sec-1">
@@ -541,7 +779,7 @@
       <div class="upload-actions">
         <label class="btn-camera">
           <input class="hidden-input" type="file" accept="image/*" capture="environment" multiple data-image-id="sec-2">
-          Tirar foto
+          Câmera
         </label>
         <label class="btn-file">
           <input class="hidden-input" type="file" accept="image/*" multiple data-image-id="sec-2">
@@ -577,7 +815,7 @@
       <div class="upload-actions">
         <label class="btn-camera">
           <input class="hidden-input" type="file" accept="image/*" capture="environment" multiple data-image-id="sec-3">
-          Tirar foto
+          Câmera
         </label>
         <label class="btn-file">
           <input class="hidden-input" type="file" accept="image/*" multiple data-image-id="sec-3">
@@ -606,7 +844,7 @@
       <div class="upload-actions">
         <label class="btn-camera">
           <input class="hidden-input" type="file" accept="image/*" capture="environment" multiple data-image-id="sec-4">
-          Tirar foto
+          Câmera
         </label>
         <label class="btn-file">
           <input class="hidden-input" type="file" accept="image/*" multiple data-image-id="sec-4">
@@ -631,7 +869,7 @@
       <div class="upload-actions">
         <label class="btn-camera">
           <input class="hidden-input" type="file" accept="image/*" capture="environment" multiple data-image-id="sec-geral">
-          Tirar foto
+          Câmera
         </label>
         <label class="btn-file">
           <input class="hidden-input" type="file" accept="image/*" multiple data-image-id="sec-geral">
@@ -655,8 +893,9 @@
 
   <div class="modal-overlay" id="profModal" aria-hidden="true">
     <div class="modal">
-      <h3>Modo professor</h3>
-      <p>Digite a senha para preencher a tabela da questão 2 automaticamente.</p>
+      <div class="badge">Modo professor</div>
+      <h3>Preencher a tabela da questão 2</h3>
+      <p>Digite a senha para preencher a tabela automaticamente.</p>
       <input id="profPassword" type="password" placeholder="Digite a senha" />
       <div class="modal-actions">
         <button id="closeProfModalBtn" class="btn-reset" type="button">Cancelar</button>
@@ -664,6 +903,24 @@
         <button id="fillTableBtn" class="btn-ok" type="button">Preencher tabela</button>
       </div>
       <div class="modal-msg" id="profMsg"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="installHelpModal" aria-hidden="true">
+    <div class="modal">
+      <div class="badge">Instalação no iPhone / iPad</div>
+      <h3>Como baixar como app no iPhone</h3>
+      <p>No iPhone, a instalação é feita pelo Safari. Use estes passos:</p>
+      <ol class="ios-steps">
+        <li>Abra este site no <strong>Safari</strong>.</li>
+        <li>Toque em <strong>Compartilhar</strong>.</li>
+        <li>Role a lista e toque em <strong>Adicionar à Tela de Início</strong>.</li>
+        <li>Confirme o nome e toque em <strong>Adicionar</strong>.</li>
+      </ol>
+      <p>Depois disso, o roteiro aparece como app na tela inicial.</p>
+      <div class="modal-actions">
+        <button id="closeInstallHelpBtn" class="btn-ok" type="button">Entendi</button>
+      </div>
     </div>
   </div>
 
@@ -1004,11 +1261,18 @@
     const fillTableBtn = document.getElementById('fillTableBtn');
     const profMsg = document.getElementById('profMsg');
 
+    const installHelpModal = document.getElementById('installHelpModal');
+    const closeInstallHelpBtn = document.getElementById('closeInstallHelpBtn');
+
     let deferredPrompt = null;
     let db;
     const DB_NAME = 'roteiroAnatomiaDB';
     const STORE_NAME = 'images';
     const IMAGE_CACHE = {};
+
+    function isIOS(){
+      return /iphone|ipad|ipod/i.test(navigator.userAgent);
+    }
 
     function showSaved(){
       saveMsg.style.display = 'block';
@@ -1098,9 +1362,7 @@
 
       if(saved && Array.isArray(saved) && saved.length){
         tableBody.innerHTML = '';
-        saved.forEach(row => {
-          addEmptyRow(row);
-        });
+        saved.forEach(row => addEmptyRow(row));
       } else {
         resetRows();
       }
@@ -1134,6 +1396,16 @@
       lightboxImg.src = '';
     }
 
+    function openModal(modal){
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeModal(modal){
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
     lightboxClose.addEventListener('click', closeLightbox);
     lightbox.addEventListener('click', (e) => {
       if(e.target === lightbox) closeLightbox();
@@ -1143,6 +1415,7 @@
       if(e.key === 'Escape') {
         closeLightbox();
         closeProfessorModal();
+        closeModal(installHelpModal);
       }
     });
 
@@ -1303,7 +1576,7 @@
           uploadRow.innerHTML = `
             <label class="btn-camera">
               <input class="hidden-input" type="file" accept="image/*" capture="environment" multiple data-image-id="item-${item.imageId}">
-              Tirar foto
+              Câmera
             </label>
             <label class="btn-file">
               <input class="hidden-input" type="file" accept="image/*" multiple data-image-id="item-${item.imageId}">
@@ -1352,16 +1625,14 @@
     }
 
     function openProfessorModal(){
-      profModal.classList.add('active');
-      profModal.setAttribute('aria-hidden', 'false');
+      openModal(profModal);
       profPassword.value = '';
       profMsg.textContent = '';
       setTimeout(() => profPassword.focus(), 50);
     }
 
     function closeProfessorModal(){
-      profModal.classList.remove('active');
-      profModal.setAttribute('aria-hidden', 'true');
+      closeModal(profModal);
       profPassword.value = '';
       profMsg.textContent = '';
     }
@@ -1424,6 +1695,13 @@
       }
     });
 
+    closeInstallHelpBtn.addEventListener('click', () => closeModal(installHelpModal));
+    installHelpModal.addEventListener('click', (e) => {
+      if(e.target === installHelpModal){
+        closeModal(installHelpModal);
+      }
+    });
+
     addRowBtn.addEventListener('click', () => {
       addEmptyRow();
       saveTable();
@@ -1439,22 +1717,27 @@
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      if (installBtn) installBtn.style.display = 'inline-block';
+      if (!isIOS()) {
+        installBtn.style.display = 'inline-block';
+      }
     });
 
-    if (installBtn) {
-      installBtn.addEventListener('click', async () => {
-        if (!deferredPrompt) return;
-        deferredPrompt.prompt();
-        await deferredPrompt.userChoice;
-        deferredPrompt = null;
-        installBtn.style.display = 'none';
-      });
-    }
+    installBtn.addEventListener('click', async () => {
+      if (isIOS()) {
+        openModal(installHelpModal);
+        return;
+      }
+
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      installBtn.style.display = 'none';
+    });
 
     window.addEventListener('appinstalled', () => {
       deferredPrompt = null;
-      if (installBtn) installBtn.style.display = 'none';
+      installBtn.style.display = 'none';
     });
 
     async function init(){
@@ -1467,6 +1750,11 @@
       Object.assign(IMAGE_CACHE, loadedImages);
 
       setupImageInputs();
+
+      if (isIOS()) {
+        installBtn.style.display = 'inline-block';
+        installBtn.textContent = 'Baixar app';
+      }
     }
 
     if ('serviceWorker' in navigator) {
@@ -1479,4 +1767,4 @@
     init();
   </script>
 </body>
-</html>
+  </html>
